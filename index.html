@@ -44,7 +44,7 @@ var disp_x   = 0;
 var disp_y   = 0;
 
 var color    = d3.scaleOrdinal(d3.schemeCategory20);
-var scall    = d3.scaleLinear().domain([0,15]).range([0,1]);
+var scall    = d3.scaleLinear().domain([0,15]).range([1,0]);
 
 
 
@@ -88,7 +88,8 @@ function(error, data)
       .attr("width"  , function(d, i) { return (disp_x+1)       }  )
       .attr("height" , function(d, i) { return 15           }  )
       // .attr("fill"   , function(d, i) { return d3.interpolateSpectral(d[j] )     }  );
-      .attr("fill"   , function(d, i) { return d3.interpolateSpectral(scall(d[ugh__no_comments[j]]))     }  );
+      // .attr("fill"   , function(d, i) { return d3.interpolateSpectral(scall(d[ugh__no_comments[j]]))     }  );
+      .attr("fill"   , function(d, i) { return d3.interpolateYlOrRd(scall(d[ugh__no_comments[j]]))     }  );
       // .attr("fill"   , function(d, i) { return color(d[ugh__no_comments[j]])     }  );
 
   }

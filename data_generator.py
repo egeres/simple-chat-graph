@@ -33,12 +33,19 @@ print "created the list of files..."
 
 time.strftime("%d/%m/%Y")
 
-# day   = int(time.strftime("%d"))
-# month = int(time.strftime("%m"))
-# year  = int(time.strftime("%Y"))
-# num_today = read_beginning(day, month, year) #45343537 por ejemplo
+day   = int(time.strftime("%d"))
+month = int(time.strftime("%m"))
+year  = int(time.strftime("%Y"))
 
-num_today = datetime.datetime.now().timetuple().tm_yday + 2017 * 365
+print "hacendado    =", day, month, year
+
+num_today = read_beginning(day, month, year) #45343537 por ejemplo
+
+# num_today = datetime.datetime.now().timetuple().tm_yday + 2017 * 365
+
+
+# num_today = read_beginning(day, month, year)
+
 
 output = []
 for i in range(365):
@@ -61,9 +68,14 @@ for n, i in enumerate(onlyfiles):
     counter       = 0
 
     #content is a list containing evert single line
-    for j in content:
+    for oppa, j in enumerate(content):
 
-        if len(j) > 0 and j[0].isdigit():
+        # print len(j.split(" ")[0].split("."))
+        # print j[0].split(" ")[0]
+
+        # if oppa == 10: print "khabsjhbasd", ajsdhh
+
+        if len(j) > 0 and j[0].isdigit() and len(j.split(" ")[0].split(".")) == 3:
 
             # print "j =", j
             # print type(j)
@@ -76,17 +88,34 @@ for n, i in enumerate(onlyfiles):
             month         = int(j.split(" ")[0].split(".")[1])
             year          = int(j.split(" ")[0].split(".")[2])
 
+            print "hacendado    =", day, month, year
+
             numeric_day_0 =       read_beginning(day, month, year) #45343000 quizs
+
+            print numeric_day_0
+            print num_today
+
             day_index     = - abs(numeric_day_0 - num_today)
 
-            if numeric_day_1:
-                if numeric_day_1 == numeric_day_0:
-                    counter += 1
+            day_index     = 365 + day_index - 2
+
+            if day_index >= -365:
+
+                if numeric_day_1:
+                    if numeric_day_1 == numeric_day_0:
+                        counter += 1
+                    else:
+                        output[day_index][n] = counter
+                        counter = 0
+                        print "appending in          ",- abs(numeric_day_0 - num_today), day_index, n
                 else:
+                    # print day_index
+                    # print len(output)
+                    # print n
+                    print "appending in          ",- abs(numeric_day_0 - num_today), day_index, n
+
                     output[day_index][n] = counter
-                    counter = 0
-            else:
-                output[day_index][n] = counter
+
             numeric_day_1 = numeric_day_0
 
     print n, "loaded chat..."
