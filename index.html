@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<header>
+  <link   rel="stylesheet" type="text/css" href="css/style.css">
+  <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+  <script src="js/d3.v4.3.0.js"></script>
+  <!-- <script src="js/lodash.js">   </script> -->
+  <!-- <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script> -->
+</header>
+
+<body>
+<svg id="main_graph" width="500" height="900"></svg>
+</body>
+
+
+
+<script>
+var svg = d3.select("svg");
+document.getElementById('main_graph').setAttribute("width", window.innerWidth - 50);
+
+var color  = d3.scaleOrdinal(d3.schemeCategory20);
+var disp_x = parseFloat(svg.style("width")) / 10;
+var disp_y = 10;
+
+console.log(disp_x);
+console.log(parseFloat(svg.style("width")));
+
+// var data = [
+//     {p: [{x: 100, y: 100}, {x: 200, y: 100}], w: 2, c: 'red'},
+//     {p: [{x: 100, y: 100}, {x: 150, y: 200}], w: 3, c: 'blue'},
+//     {p: [{x: 150, y: 200}, {x: 200, y: 100}], w: 1, c: 'green'}
+// ];
+
+// Line generator
+var line = d3.line()
+    .x(function(d) { return d.x; })
+    .y(function(d) { return d.y; });
+
+// svg.selectAll('path')
+//    .data(data)
+//    .enter().append('path')
+//    .attr('d', function(d) { return line(d.p); })
+//    .attr('stroke-width', function(d) { return d.w; })
+//    .attr('stroke', function(d) { return d.c; });
+
+  d3.csv("data.csv", function(d, i) { return d; },
+  function(error, data) {
+
+    if (error) throw error;
+
+    // aquí iría un for o algo pasa cada fila
+
+    svg.selectAll('path')
+      .data(data)
+      .enter()
+      // .append('path')
+      // .attr('d'            , function(d, i) { return line( [{x: i, y: 100}, {x: i+10, y: 100}] ); })
+      // .attr('stroke'       , function(d, i) { return color(i);        })
+      // .attr('stroke-width' , "4");
+
+      .append("rect")
+      // .attr("x"      , function(d, i) { return 50+ i*disp_x }  )
+    	// .attr("y"      , "34"  )
+    	// .attr("width"  , "34"  )
+    	// .attr("height" , "34"  )
+    	// .attr("fill"   , "red"  );
+
+    	.attr("x"      , function(d, i) { return 50+ i*disp_x }  )
+    	.attr("y"      , function(d, i) { return 100          }  )
+    	.attr("width"  , function(d, i) { return disp_x       }  )
+    	.attr("height" , function(d, i) { return 50           }  )
+    	.attr("fill"   , function(d, i) { return color(i)     }  );
+
+  }
+  );
+
+
+
+</script>
