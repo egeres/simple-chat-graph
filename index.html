@@ -83,9 +83,9 @@ function(error, data)
     svg.selectAll('path')
       .data(data)
       .enter().append("rect")
-      .attr("x"      , function(d, i) { return 50+ i*disp_x }  )
-      .attr("y"      , function(d, i) { return 50+ j*16 }  )
-      .attr("width"  , function(d, i) { return disp_x       }  )
+      .attr("x"      , function(d, i) { return 50+ i*(disp_x) }  )
+      .attr("y"      , function(d, i) { return 50+ j*18 }  )
+      .attr("width"  , function(d, i) { return (disp_x+1)       }  )
       .attr("height" , function(d, i) { return 15           }  )
       // .attr("fill"   , function(d, i) { return d3.interpolateSpectral(d[j] )     }  );
       .attr("fill"   , function(d, i) { return d3.interpolateSpectral(scall(d[ugh__no_comments[j]]))     }  );
