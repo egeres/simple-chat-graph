@@ -129,7 +129,7 @@ with open('data.csv', 'wb') as myfile:
 
     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
 
-    wr.writerow(["a", "b", "c", "d", "e", "f", "g", "h", "i"][0:len(output[0])])
+    wr.writerow(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"][0:len(output[0])])
 
     for i in output:
 
