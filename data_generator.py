@@ -65,7 +65,10 @@ for n, i in enumerate(onlyfiles):
     content = [x.strip() for x in content]
 
     numeric_day_1 = None
+    numeric_day_2 = None
     counter       = 0
+
+
 
     #content is a list containing evert single line
     for oppa, j in enumerate(content):
@@ -88,41 +91,62 @@ for n, i in enumerate(onlyfiles):
             month         = int(j.split(" ")[0].split(".")[1])
             year          = int(j.split(" ")[0].split(".")[2])
 
-            print "hacendado    =", day, month, year
+            print "day, month, year =", day, month, year,
 
             numeric_day_0 =       read_beginning(day, month, year) #45343000 quizs
 
-            print numeric_day_0
-            print num_today
+            if not numeric_day_1:
+                numeric_day_1 = numeric_day_0
 
-            day_index     = - abs(numeric_day_0 - num_today)
-
+            day_index     = - abs(numeric_day_1 - num_today)
             day_index     = 365 + day_index - 2
+            print "            day_index =", day_index
 
-            if day_index >= -365:
+            # print numeric_day_0
+            # print num_today
+
+            # if day_index >= -365:
+            if day_index >= 0 and day_index < 365:
+
+                # day_index     = - abs(numeric_day_1 - num_today)
+                # day_index     = 365 + day_index - 2
+                # print "            day_index =", day_index
 
                 if numeric_day_1:
                     if numeric_day_1 == numeric_day_0:
                         counter += 1
+
                     else:
                         output[day_index][n] = counter
+                        print "\n", "0 appending in          ",- abs(numeric_day_1 - num_today), "day_index =", day_index, n, " counter =", counter, "\n"
                         counter = 0
-                        print "appending in          ",- abs(numeric_day_0 - num_today), day_index, n
                 else:
-                    # print day_index
-                    # print len(output)
-                    # print n
-                    print "appending in          ",- abs(numeric_day_0 - num_today), day_index, n
-
+                    print "\n", "1 appending in          ",- abs(numeric_day_1 - num_today), "day_index =", day_index, n, " counter =", counter, "\n"
                     output[day_index][n] = counter
 
             numeric_day_1 = numeric_day_0
 
-    print n, "loaded chat..."
+
+    print "day_index =", day_index
+    day_index     = - abs(numeric_day_0 - num_today)
+    print "day_index =", day_index
+
+    day_index     = 365 + day_index - 2
+    print "day_index =", day_index
+
+    print "\n", "2 appending in          ",- abs(numeric_day_0 - num_today), "day_index =", day_index, n, " counter =", counter, "\n"
+    output[day_index][n] = counter
+
+    print "\n", n, "loaded chat..."
 
 
 
 # output_commit_info = sorted(output_commit_info, key=lambda x: x[0])
+
+print "\n"*3
+print output
+print "\n"*3
+
 
 
 with open('data.csv', 'wb') as myfile:
