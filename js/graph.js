@@ -31,7 +31,7 @@ var data        = [
 // $.getJSON("data.json", function(data_text) { console.log(">>>" + data_text); data = data_text; } );
 // $.getJSON("data.json", function(data_text) { console.log("hayyy =" + data_text); } );
 
-var response = $.getJSON( "data.json", function(obtained_data) {
+var response = $.getJSON( "data_0.json", function(obtained_data) {
     data = obtained_data;
     console.log( "success" );
 })
