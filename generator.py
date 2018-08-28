@@ -6,8 +6,8 @@ import json, simplejson, string, pprint
 
 printable         = set(string.printable)
 data_to_export    = []
-range_to_import   = 6
-days_range        = 10
+range_to_import   = 26
+days_range        = 200
 working_directory = ""
 
 with open(working_directory+"result.json") as f:
