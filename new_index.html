@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<header>
+
+    <meta charset="utf-8">
+    <title>Chats</title>
+    <link   rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+    <script src="js/d3.v4.3.0.js"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <!-- <script src="js/lodash.js">   </script> -->
+    <!-- <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script> -->
+
+
+
+
+    <!-- <script src="https://d3js.org/d3-interpolate.v1.min.js"></script> -->
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+</header>
+
+<body>
+    <div id="graph_container"></div>
+    <script src="js/graph.js"></script>
+</body>
+
+
+
+
+
+
+
+
+<!-- <script>
+
+    // var svg = d3.select("svg");
+    // document.getElementById('main_graph').setAttribute("width", window.innerWidth - 50);
+
+    var chartDiv = document.getElementById("graph_container");
+    var svg      = d3.select(chartDiv).append("svg");
+    var width    = chartDiv.offsetWidth;
+    var height   = chartDiv.offsetHeight;
+    var data     = {
+    	"a":[
+    	[7,7,7,7, 0,0,0,0, 1,1,1,1],
+    	[6,6,6,6, 0,0,0,0, 1,1,1,1],
+    	[5,5,5,5, 0,0,0,0, 1,1,1,1],
+    	[4,3,3,3, 0,0,0,0, 3,3,3,3],
+    	[2,2,2,2, 0,0,0,0, 2,2,2,2],
+    	[1,1,1,1, 0,0,0,0, 1,1,1,1],
+    	]
+    };
+
+    // setTimeout()
+    $.getJSON("data.json", function() { console.log(">>asdasd>"); } );
+    // $.getJSON("data.json", function(data_text) { console.log(">>>" + data_text); data = data_text; } );
+    // $.getJSON("data.json", function(data_text) { console.log("hayyy =" + data_text); } );
+
+    console.log(data);
+
+    function resize_svg() {
+        console.log("Resizing...");
+
+        width  = chartDiv.offsetWidth;
+        height = chartDiv.offsetHeight;
+        svg.attr("width", width).attr("height", height);
+    }
+
+    function redraw() {
+        console.log("Redrawing graph...");
+
+        svg.selectAll("*").remove();
+
+        resize_svg();
+    }
+
+
+    setTimeout(function(){   $.getJSON("data.json", function() { console.log(">>asdasd>"); } );   }, 500);
+
+
+    redraw();
+    setTimeout(function(){ redraw(); }, 500);
+    window.addEventListener("resize", redraw);
+
+
+</script> -->
