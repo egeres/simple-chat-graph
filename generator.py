@@ -6,8 +6,8 @@ import json, simplejson, string, pprint
 
 printable         = set(string.printable)
 data_to_export    = []
-range_to_import   = 26
-days_range        = 200
+range_to_import   = 60
+days_range        = 700
 working_directory = ""
 
 with open(working_directory+"result.json") as f:
@@ -47,14 +47,14 @@ with open(working_directory+"result.json") as f:
                 # print "None"
                 data_to_export.append({})
 
-    print data_to_export
+    # print data_to_export
 
     for n, i in enumerate(config["chats"]["list"][0:range_to_import-1]):
         # print i["messages"][0:5]
 
         print n
         if (len(data_to_export[n].keys()) > 0):
-            print pprint.pprint(i["messages"][0:5])
+            # print pprint.pprint(i["messages"][0:5])
             print len(data_to_export)
             valid = 0
             for j in i["messages"]:
@@ -77,7 +77,7 @@ with open(working_directory+"result.json") as f:
         else:
             print "pasando..."
 
-with open(working_directory+'data_0.json', 'w') as outfile:
+with open(working_directory+'data_1.json', 'w') as outfile:
     json.dump(data_to_export, outfile, sort_keys=True, indent=4, separators=(',', ': '))
 
 

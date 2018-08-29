@@ -8,6 +8,12 @@ var height      = chartDiv.offsetHeight;
 
 var square_size     = 5;
 var square_size     = 6;
+
+var square_1_x      = 2;
+var square_1_y      = 15;
+var margin_1_x      = 0;
+var margin_1_y      = 1;
+
 var separation      = 1;
 var margin_streams  = 5;
 var scall           = d3.scaleLinear().domain([0,500]).range([1, 0]);
@@ -34,7 +40,7 @@ var data        = [
 // $.getJSON("data.json", function(data_text) { console.log(">>>" + data_text); data = data_text; } );
 // $.getJSON("data.json", function(data_text) { console.log("hayyy =" + data_text); } );
 
-var response = $.getJSON( "data_0.json", function(obtained_data) {
+var response = $.getJSON( "data_1.json", function(obtained_data) {
     data = obtained_data;
     console.log( "success" );
 })
@@ -44,6 +50,10 @@ var response = $.getJSON( "data_0.json", function(obtained_data) {
 
 
 console.log(data);
+
+function getBaseLog(x, y) {
+  return Math.log(y) / Math.log(x);
+}
 
 function resize_svg() {
     console.log("Resizing...");
@@ -65,12 +75,13 @@ function draw_chat(index, single_chat_history) {
 
         g.selectAll("foo").data(single_chat_history.chat_messages_1).enter().append("rect")
         // g.selectAll("foo").data([0,0,0,100]).enter().append("rect")
-            .attr("x", function(d, i) { return width - (i + 1) * (square_size+separation); } )
+            .attr("x", function(d, i) { return width - (i + 1) * (square_1_x+margin_1_x); } )
             // .attr("y", function(d, i) { return separation + i * (square_size+separation) + index *( margin_streams + 12 * (square_size+separation)); })
-            .attr("y", function(d, i) { return separation + index *( margin_streams + 1 * (square_size+separation)); })
-            .attr("width" , square_size)
-            .attr("height", square_size)
-            .attr("fill", function(d, i) {  return d3.interpolateYlOrRd(scall(d))} );
+            .attr("y", function(d, i) { return index *( square_1_y+margin_1_y); })
+            .attr("width" , square_1_x)
+            .attr("height", square_1_y)
+            // .attr("fill", function(d, i) {  return d3.interpolateYlOrRd(scall(d))} );
+            .attr("fill", function(d, i) {  return d3.interpolateYlOrRd( 1 - getBaseLog(500, d) )} ); // logaritmic scale
     }
     if (display_mode == "4") {
     }
@@ -103,7 +114,7 @@ function redraw() {
 
 
 redraw();
-// setTimeout(function(){ redraw(); }, 500);
+setTimeout(function(){ redraw(); }, 500);
 window.addEventListener("resize", redraw);
 
 console.log("asdasdads");
