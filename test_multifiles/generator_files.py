@@ -2,43 +2,45 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-import json, simplejson, string, pprint
+import json, simplejson, string, pprint, sys
 
-printable         = set(string.printable)
-data_to_export    = []
-range_to_import   = 60
-days_range        = 700
-working_directory = ""
+printable                = set(string.printable)
+data_to_export           = []
+range_of_chats_to_import = 3
+days_range               = 10
+working_directory        = ""
 
-with open(working_directory+"result.json") as f:
+filename = working_directory+"result.json"
+if len(sys.argv) > 1:
+    filename = sys.argv[1]
+    working_directory = "\\".join(filename.split("\\")[:-1])
+    # print ("working_directory =", working_directory)
+
+with open(filename) as f:
     config = json.load(f)
 
-    print config.keys()
-    print type(config["chats"])
-    print config["chats"].keys()
-    print type(config["chats"]["list"])
-    print config["chats"]["list"][0].keys()
+    # print config.keys()
+    # print type(config["chats"])
+    # print config["chats"].keys()
+    # print type(config["chats"]["list"])
+    # print config["chats"]["list"][0].keys()
 
-    for n, i in enumerate(config["chats"]["list"][0:range_to_import]):
-        print "-------------------"
+    print ("\nPre processing !\n")
+    # This for generates the dictionary structure to fill in with real data later
+    for n, i in enumerate(config["chats"]["list"][0:range_of_chats_to_import]):
+        print "Processing...",
         if "name" in i.keys():
-            print type(i)
-            print i.keys()
+            # print type(i)
+            # print i.keys()
             # print i["name"]
             if i["name"] != None:
                 print filter(lambda x: x in printable, i["name"])
-                # data_to_export.append({"nombre"         : i["name"]})
 
                 tmp_dict = {}
                 tmp_dict["nombre"          ] = str(n)
-                tmp_dict["chat_messages_1" ] = [0]*days_range
-                tmp_dict["chat_messages_4" ] = [ [0,0,0,0], [1,1,1,1] ]
-                tmp_dict["chat_messages_12"] = [ [7,7,7,7,0,0,0,0,1,1,1,1] ]
-
-                # data_to_export.append({"nombre"          : str(n)})
-                # data_to_export.append({"chat_messages_1" : [0]*days_range})
-                # data_to_export.append({"chat_messages_4" : [ [0,0,0,0], [1,1,1,1] ]})
-                # data_to_export.append({"chat_messages_12": [ [7,7,7,7,0,0,0,0,1,1,1,1] ]})
+                tmp_dict["chat_messages_1" ] = [0]*days_range                # Daily messages
+                tmp_dict["chat_messages_4" ] = [ [0,0,0,0], [1,1,1,1] ]      # Each 4 days
+                tmp_dict["chat_messages_12"] = [ [7,7,7,7,0,0,0,0,1,1,1,1] ] # Each 12 days
 
                 data_to_export.append(tmp_dict)
 
@@ -46,10 +48,12 @@ with open(working_directory+"result.json") as f:
             else:
                 # print "None"
                 data_to_export.append({})
+        else:
+            print "Unnamed"
 
     # print data_to_export
 
-    for n, i in enumerate(config["chats"]["list"][0:range_to_import-1]):
+    for n, i in enumerate(config["chats"]["list"][0:range_of_chats_to_import-1]):
         # print i["messages"][0:5]
 
         print n
@@ -77,7 +81,7 @@ with open(working_directory+"result.json") as f:
         else:
             print "pasando..."
 
-with open(working_directory+'data_1.json', 'w') as outfile:
+with open(working_directory+'\\files\\data_1.json', 'w') as outfile:
     json.dump(data_to_export, outfile, sort_keys=True, indent=4, separators=(',', ': '))
 
 
