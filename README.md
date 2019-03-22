@@ -1,7 +1,7 @@
 # simple-chat-graph
 Small web application to display a graph with the message intensity of telegram chats.
 
-![](https://github.com/egeres/asiic/blob/master/simple-chat-graph/screenshot_0.png)
+![](https://github.com/egeres/simple-chat-graph/blob/master/others/screenshot_0.png)
 
 ## How to use :
 
