@@ -32,7 +32,7 @@
             margin-left: 10px;
             /* justify-content: center; */
             align-items: center;
-            width: 150px;
+            width: 190px;
 
             height: 30px;
             /* height: auto; */
@@ -96,14 +96,15 @@
             var title_element;
             title_element = document.createElement('div');
             title_element.setAttribute("class", "graph_title");
-            title_element.innerHTML = "asd";
+            // title_element.innerHTML = "asd";
+            title_element.innerHTML = json_data["title"];
             new_element.appendChild(title_element);
 
             if (json_data["type"] == "timeline_float")
             {
                 // Generating the SVG
                 var xmlns = "http://www.w3.org/2000/svg";
-                var boxWidth = 300;
+                var boxWidth = 1500;
                 var boxHeight = 30;
                 var svgElem = document.createElementNS (xmlns, "svg");
                 svgElem.setAttributeNS (null, "id", name_of_the_file.split(".")[0]+"_graph" );
@@ -115,7 +116,7 @@
 
                 svg        = d3.select("#"+name_of_the_file.split(".")[0]+"_graph");
                 console.log("Selecting... " +name_of_the_file.split(".")[0]+"_graph" );
-                var rect_width = 5;
+                var rect_width = 4;
 
                 for(var j = 0; j<1; j++)
                 {
@@ -126,7 +127,8 @@
                     .attr("y"      , function(d, i) { return 0 }  )
                     .attr("width"  , function(d, i) { return (rect_width)       }  )
                     .attr("height" , function(d, i) { return 120 }  )
-                    .attr("fill"   , function(d, i) { return d3.interpolateYlOrRd( 1-(d/json_data["timeline_float_max"]) )     }  );
+                    // .attr("fill"   , function(d, i) { return d3.interpolateYlOrRd( 1-(d/json_data["timeline_float_max"]) )     }  );
+                    .attr("fill"   , function(d, i) { return d3.interpolateYlOrRd( 1-(d/100) )     }  );
                 }
             }
 
