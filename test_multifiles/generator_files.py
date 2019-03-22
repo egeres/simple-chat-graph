@@ -48,7 +48,7 @@ with open(filename) as f:
                 # tmp_dict["nombre"          ] = str(n)
                 # tmp_dict["nombre"          ] = str(i["name"])
                 # tmp_dict["nombre"          ] = i["name"].encode('utf-8')
-                tmp_dict["nombre"          ] = i["name"].encode('ascii', 'ignore')
+                tmp_dict["nombre"          ] = i["name"].encode('ascii', 'ignore').replace(":", "")
                 tmp_dict["chat_messages_1" ] = [0]*days_range                # Daily messages
                 tmp_dict["chat_messages_4" ] = [ [0,0,0,0], [1,1,1,1] ]      # Each 4 days  (currently not in use)
                 tmp_dict["chat_messages_12"] = [ [7,7,7,7,0,0,0,0,1,1,1,1] ] # Each 12 days (currently not in use)

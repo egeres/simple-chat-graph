@@ -26,9 +26,15 @@
         }
 
         .container_graphs {
+
+            scrollbar-color: grey #121212;
+            scrollbar-width: auto;
+            overflow-x: scroll;
             float: right;
             /* background-color: #308b3d; */
             width: 80%;
+            max-width: 80%;
+            min-width: 80%;
         }
 
         .container_row {
@@ -42,6 +48,12 @@
 
             /* display: block; */
             /* height: 20px; */
+        }
+
+        .container_timeline {
+            background-color: #222222;
+            height: 40px;
+            margin: 5px;
         }
 
         .container_row_graph {
@@ -90,7 +102,8 @@
 
 <body>
     <div id="aaa" class="container_info"></div>
-    <div id="bbb" class="container_graphs"></div>
+    <div id="bbb" class="container_graphs">
+    </div>
 </body>
 
 
@@ -113,14 +126,13 @@
 
 
     // var filenames = ["a.json", "b.json"]
-    var filenames = ["a.json", "b.json"]
 
 
-    function Generate_graph(name_of_the_file) {
+    async function Generate_graph(name_of_the_file) {
 
-        console.log("name_of_the_file =", name_of_the_file);
+        // console.log("name_of_the_file =", name_of_the_file);
 
-        d3.json("files/"+name_of_the_file, function(error, json_data)
+        await d3.json("files/"+name_of_the_file, function(error, json_data)
         {
             // console.log("error =" + error);
             // console.log("data  =" + json_data);
@@ -166,7 +178,7 @@
                 new_element.appendChild(svgElem);
 
                 svg        = d3.select("#"+name_of_the_file.split(".")[0]+"_graph");
-                console.log("Selecting... " +name_of_the_file.split(".")[0]+"_graph" );
+                // console.log("Selecting... " +name_of_the_file.split(".")[0]+"_graph" );
                 var rect_width = 4;
 
                 for(var j = 0; j<1; j++)
@@ -179,18 +191,78 @@
                     .attr("width"  , function(d, i) { return (rect_width)       }  )
                     .attr("height" , function(d, i) { return 120 }  )
                     // .attr("fill"   , function(d, i) { return d3.interpolateYlOrRd( 1-(d/json_data["timeline_float_max"]) )     }  );
-                    .attr("fill"   , function(d, i) { return d3.interpolateYlOrRd( 1-(d/50) )     }  );
+                    .attr("fill"   , function(d, i) { return d3.interpolateYlOrRd( 1-(d/500) )     }  );
                 }
+
+                // var new_element;
+                // new_element = document.createElement('div');
+                // new_element.setAttribute("class", "container_timeline");
+                // document.getElementById("bbb").appendChild(new_element);
+
             }
 
         });
     }
 
-    for (var i = 0; i < filenames.length; i++) {
-        console.log("Procesing..."+filenames[i])
-        var name_of_the_file = filenames[i].split(".")[0];
-        // var svg;
-        Generate_graph(filenames[i])
-    }
+    // for (var i = 0; i < filenames.length; i++) {
+    //     console.log("Procesing..."+filenames[i])
+    //     var name_of_the_file = filenames[i].split(".")[0];
+    //     // var svg;
+    //     Generate_graph(filenames[i])
+    // }
+
+    console.log("Het");
+
+    filenames.forEach((filename) => {
+        // console.log("Procesing..."+filename)
+        var name_of_the_file = filename.split(".")[0];
+        Generate_graph(filename)
+    })
+
+    // async function asyncForEach(array, callback) {
+    //   for (let index = 0; index < array.length; index++) {
+    //     await callback(array[index], index, array);
+    //   }
+    // }
+    //
+    // const start = async () => {
+    //     await asyncForEach(filenames, async (filename) => {
+    //         var name_of_the_file = filename.split(".")[0];
+    //         await Generate_graph(filename)
+    //     })
+    // }
+    //
+    // start();
+
+    setTimeout(function() {
+
+        console.log("End");
+
+        // We append the div for the timeline
+        var new_element;
+        new_element = document.createElement('div');
+        new_element.setAttribute("class", "container_timeline");
+        document.getElementById("bbb").appendChild(new_element);
+
+
+        var xmlns = "http://www.w3.org/2000/svg";
+        var boxWidth = 1500;
+        var boxHeight = 40;
+        var svgElem = document.createElementNS (xmlns, "svg");
+        svgElem.setAttributeNS (null, "id", "timeline" );
+        svgElem.setAttributeNS (null, "viewBox", "0 0 " + boxWidth + " " + boxHeight);
+        svgElem.setAttributeNS (null, "width", boxWidth);
+        svgElem.setAttributeNS (null, "height", boxHeight);
+        // svgElem.setAttributeNS (null, "display", "block");
+        // new_element.appendChild(svgElem);
+        // document.getElementById("bbb").appendChild(svgElem);
+        new_element.appendChild(svgElem);
+
+        svg        = d3.select("#timeline");
+        // document.getElementById("bbb").insertBefore(new_element, "undefined");
+        svg.append('rect').attr("x", 0).attr("y", 0).attr("width", 1500).attr("height", 40).attr("fill","#161616")
+        svg.append('rect').attr("x", 0).attr("y", 19).attr("width", 1500).attr("height", 2).attr("fill","#ffffff")
+
+    }, 500);
 
 </script>
