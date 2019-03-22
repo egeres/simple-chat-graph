@@ -49,7 +49,7 @@ var response = $.getJSON( "data_1.json", function(obtained_data) {
 .always(function() {  console.log( "complete" ); });
 
 
-console.log(data);
+// console.log(data);
 
 function getBaseLog(x, y) {
   return Math.log(y) / Math.log(x);

@@ -134,7 +134,7 @@ with open(filename) as f:
         else:
             print "it's empthy..."
 
-print ("list_of_exported_files = " + str(list_of_exported_files))
+print ("\nlist_of_exported_files = " + str(list_of_exported_files))
 
 
 # with open(working_directory+'\\files\\data_1.json', 'w') as outfile:
