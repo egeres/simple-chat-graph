@@ -6,8 +6,8 @@ import json, simplejson, string, pprint, sys
 
 printable                = set(string.printable)
 data_to_export           = []
-range_of_chats_to_import = 25
-days_range               = 300
+range_of_chats_to_import = 50
+days_range               = 900
 working_directory        = ""
 output_directory         = None
 list_of_exported_files   = []
@@ -48,7 +48,7 @@ with open(filename) as f:
                 # tmp_dict["nombre"          ] = str(n)
                 # tmp_dict["nombre"          ] = str(i["name"])
                 # tmp_dict["nombre"          ] = i["name"].encode('utf-8')
-                tmp_dict["nombre"          ] = i["name"].encode('ascii', 'ignore').replace(":", "")
+                tmp_dict["nombre"          ] = i["name"].encode('ascii', 'ignore').replace(":", "").replace(" ", "")
                 tmp_dict["chat_messages_1" ] = [0]*days_range                # Daily messages
                 tmp_dict["chat_messages_4" ] = [ [0,0,0,0], [1,1,1,1] ]      # Each 4 days  (currently not in use)
                 tmp_dict["chat_messages_12"] = [ [7,7,7,7,0,0,0,0,1,1,1,1] ] # Each 12 days (currently not in use)
@@ -58,13 +58,16 @@ with open(filename) as f:
 
             else:
                 # print "None"
-                data_to_export.append({})
+                tmp_dict = {}
+                tmp_dict["nombre"          ] = "Unnamed_" + str(n)
+                tmp_dict["chat_messages_1" ] = [0]*days_range                # Daily messages
+                data_to_export.append(tmp_dict)
         else:
             print "Unnamed"
             tmp_dict = {}
             # tmp_dict["nombre"          ] = str(n)
             # tmp_dict["nombre"          ] = str(i["name"])
-            tmp_dict["nombre"          ] = "Unnamed"
+            tmp_dict["nombre"          ] = "Unnamed_" + str(n)
             tmp_dict["chat_messages_1" ] = [0]*days_range                # Daily messages
             tmp_dict["chat_messages_4" ] = [ [0,0,0,0], [1,1,1,1] ]      # Each 4 days  (currently not in use)
             tmp_dict["chat_messages_12"] = [ [7,7,7,7,0,0,0,0,1,1,1,1] ] # Each 12 days (currently not in use)
