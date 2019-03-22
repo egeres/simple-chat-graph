@@ -11,23 +11,58 @@
 
     <style>
         body, html {
-            width: 100%;
+            /* min-width: 100%; */
             height: 100%;
             background-color: #000000;
             margin: 0;
-            overflow-y: hidden;
+            /* overflow-y: hidden; */
         }
 
-        .container_graph {
-            background-color: #2f2f2f;
+        .container_info {
+            position: fixed;
+            float: left;
+            /* background-color: #061fbb; */
+            width: 20%;
+        }
+
+        .container_graphs {
+            float: right;
+            /* background-color: #308b3d; */
+            width: 80%;
+        }
+
+        .container_row {
+            /* display: flex; justify-content: center; */
+
+            display: block;
+            /* background-color: #ba2424; */
             margin:5px;
-            padding:0;
+            background-color: #2f2f2f;
+
+
+            /* display: block; */
+            /* height: 20px; */
+        }
+
+        .container_row_graph {
+            /* display: flex; justify-content: center; */
+
+            display: block;
+            /* background-color: #ba2424; */
+            margin:5px;
+            /* background-color: #2f2f2f; */
+
+
+            /* display: block; */
             /* height: 20px; */
         }
 
         .graph_title {
-            float: left;
-            display: flex;
+            /* background-color: #2f2f2f; */
+
+            display: block;
+            /* float: left; */
+            /* display: flex; */
 
             margin-left: 10px;
             /* justify-content: center; */
@@ -46,13 +81,16 @@
 
         svg {
             margin: 0;
+            display: block;
+            /* float: right; */
         }
     </style>
 
 </header>
 
 <body>
-<!-- <svg id="main_graph" width="500" height="900"></svg> -->
+    <div id="aaa" class="container_info"></div>
+    <div id="bbb" class="container_graphs"></div>
 </body>
 
 
@@ -77,6 +115,7 @@
     // var filenames = ["a.json", "b.json"]
     var filenames = ["a.json", "b.json"]
 
+
     function Generate_graph(name_of_the_file) {
 
         console.log("name_of_the_file =", name_of_the_file);
@@ -89,8 +128,12 @@
             // Generating the div container
             var new_element;
             new_element = document.createElement('div');
-            new_element.setAttribute("class", "container_graph");
-            document.body.appendChild(new_element);
+            // new_element.setAttribute("class", "container_graph");
+            // new_element.setAttribute("class", "container_row_graph");
+            new_element.setAttribute("class", "container_row");
+            // new_element.innerHTML = "adsadda";
+            // document.body.appendChild(new_element);
+            document.getElementById("aaa").appendChild(new_element);
 
             // Loading the title of the graph
             var title_element;
@@ -102,6 +145,12 @@
 
             if (json_data["type"] == "timeline_float")
             {
+
+                var new_element;
+                new_element = document.createElement('div');
+                new_element.setAttribute("class", "container_row_graph");
+                document.getElementById("bbb").appendChild(new_element);
+
                 // Generating the SVG
                 var xmlns = "http://www.w3.org/2000/svg";
                 var boxWidth = 1500;
@@ -111,7 +160,9 @@
                 svgElem.setAttributeNS (null, "viewBox", "0 0 " + boxWidth + " " + boxHeight);
                 svgElem.setAttributeNS (null, "width", boxWidth);
                 svgElem.setAttributeNS (null, "height", boxHeight);
-                svgElem.setAttributeNS (null, "display", "block");
+                // svgElem.setAttributeNS (null, "display", "block");
+                // new_element.appendChild(svgElem);
+                // document.getElementById("bbb").appendChild(svgElem);
                 new_element.appendChild(svgElem);
 
                 svg        = d3.select("#"+name_of_the_file.split(".")[0]+"_graph");
@@ -128,7 +179,7 @@
                     .attr("width"  , function(d, i) { return (rect_width)       }  )
                     .attr("height" , function(d, i) { return 120 }  )
                     // .attr("fill"   , function(d, i) { return d3.interpolateYlOrRd( 1-(d/json_data["timeline_float_max"]) )     }  );
-                    .attr("fill"   , function(d, i) { return d3.interpolateYlOrRd( 1-(d/100) )     }  );
+                    .attr("fill"   , function(d, i) { return d3.interpolateYlOrRd( 1-(d/50) )     }  );
                 }
             }
 
