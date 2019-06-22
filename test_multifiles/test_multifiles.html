@@ -23,9 +23,21 @@
         }
 
         .container_info {
+            overflow-y: scroll;
+
             position: fixed;
             float: left;
             /* background-color: #061fbb; */
+
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            bottom: 10px;
+            width: 180px;
+            background-color: #eee;
+            overflow-y: scroll;
+
+
             width: 20%;
         }
 
@@ -130,7 +142,9 @@
 
 
     // var filenames = ["a.json", "b.json"]
-
+    /* var filenames = ['chat_Unnamed.json', 'chat_Berta.json', 'chat_Miguel.json', 'chat_Willy.json', 'chat_Migueln.json', 'chat_Simmone.json', 'chat_Eve.json', 'chat_adrian.json', 'chat_Roge.json', 'chat_Ai_th_a_0001:BE47.json', 'chat_Rafiki.json', 'chat_Klaus.json', 'chat_Cristina.json', 'chat_Mama.json', 'chat_Chriis.json', 'chat_Humanu.json', 'chat_Carla.json', 'chat_Telegram.json', 'chat_Vctor.json', 'chat_Jowie.json', 'chat_Mara.json', 'chat_Dani.json', 'chat_akpla.json', 'chat_brys.json'] */
+    var filenames = ['chat_Unnamed.json', 'chat_Berta.json', 'chat_Miguel.json', 'chat_Willy.json', 'chat_Migueln.json', 'chat_Simmone.json', 'chat_Eve.json', 'chat_adrian.json', 'chat_Roge.json', 'chat_Ai_th_a_0001BE47.json', 'chat_Rafiki.json', 'chat_Klaus.json', 'chat_Cristina.json', 'chat_Mama.json', 'chat_Chriis.json', 'chat_Humanu.json', 'chat_Carla.json', 'chat_Telegram.json', 'chat_Vctor.json', 'chat_Jowie.json', 'chat_Mara.json', 'chat_Dani.json', 'chat_akpla.json', 'chat_brys.json']
+    var filenames = ['chat_Unnamed_0.json', 'chat_Berta.json', 'chat_Miguel.json', 'chat_Willy.json', 'chat_Migueln.json', 'chat_Simmone.json', 'chat_Eve.json', 'chat_adrian.json', 'chat_Roge.json', 'chat_Ai_th_a_0001BE47.json', 'chat_Rafiki.json', 'chat_Klaus.json', 'chat_Cristina.json', 'chat_Mama.json', 'chat_Chriis.json', 'chat_Humanu.json', 'chat_Carla.json', 'chat_Telegram.json', 'chat_Vctor.json', 'chat_Jowie.json', 'chat_Mara.json', 'chat_Dani.json', 'chat_akpla.json', 'chat_brys.json', 'chat_Chica_ome_aq.json', 'chat_Andrs.json', 'chat_Unnamed_26.json', 'chat_Kevin.json', 'chat_Ama.json', 'chat_Yeisvasquez.json', 'chat_Javi.json', 'chat_Alberto.json', 'chat_Adrin.json', 'chat_Master of the UwUniverse.json', 'chat_Mara Dolores.json', 'chat_Paula.json', 'chat_ngel.json', 'chat_Keyk.json', 'chat_Javi.json', 'chat_Laura-chan.json', 'chat_Vera-sama.json', 'chat_Unnamed_41.json', 'chat_Kai.json', 'chat_Raymond.json', 'chat_Agustin.json', 'chat_Innominado.json', 'chat_Unnamed_46.json', 'chat_Unnamed_47.json', 'chat_Alex.json']
 
     async function Generate_graph(name_of_the_file) {
 
@@ -169,7 +183,7 @@
 
                 // Generating the SVG
                 var xmlns = "http://www.w3.org/2000/svg";
-                var boxWidth = 1500;
+                var boxWidth = 4500;
                 var boxHeight = 30;
                 var svgElem = document.createElementNS (xmlns, "svg");
                 svgElem.setAttributeNS (null, "id", name_of_the_file.split(".")[0]+"_graph" );
@@ -190,7 +204,7 @@
                   svg.selectAll('path')
                     .data(json_data["data"])
                     .enter().append("rect")
-                    .attr("x"      , function(d, i) { return i*(rect_width+1) }  )
+                    .attr("x"      , function(d, i) { return i*(rect_width) }  )
                     .attr("y"      , function(d, i) { return 0 }  )
                     .attr("width"  , function(d, i) { return (rect_width)       }  )
                     .attr("height" , function(d, i) { return 120 }  )
@@ -220,7 +234,13 @@
     filenames.forEach((filename) => {
         // console.log("Procesing..."+filename)
         var name_of_the_file = filename.split(".")[0];
+
+        setTimeout(function() {
         Generate_graph(filename)
+        },
+        500);
+
+
     })
 
     // async function asyncForEach(array, callback) {
@@ -250,7 +270,7 @@
 
 
         var xmlns = "http://www.w3.org/2000/svg";
-        var boxWidth = 1500;
+        var boxWidth = 2500;
         var boxHeight = 40;
         var svgElem = document.createElementNS (xmlns, "svg");
         svgElem.setAttributeNS (null, "id", "timeline" );
@@ -264,9 +284,15 @@
 
         svg        = d3.select("#timeline");
         // document.getElementById("bbb").insertBefore(new_element, "undefined");
-        svg.append('rect').attr("x", 0).attr("y", 0).attr("width", 1500).attr("height", 40).attr("fill","#161616")
-        svg.append('rect').attr("x", 0).attr("y", 19).attr("width", 1500).attr("height", 2).attr("fill","#ffffff")
+        svg.append('rect').attr("x", 0).attr("y", 0).attr("width", 4500).attr("height", 40).attr("fill","#161616")
+        svg.append('rect').attr("x", 0).attr("y", 19).attr("width", 4500).attr("height", 2).attr("fill","#ffffff")
 
-    }, 500);
+    }, 500000000);
+
+    /* var container_bbb = document.getElementById("bbb");
+
+    while (true) {
+        console.log(container_bbb.scrollHeight);
+    } */
 
 </script>

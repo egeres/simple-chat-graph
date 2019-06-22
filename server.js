@@ -1,11 +1,18 @@
-const express = require('express');
+const express    = require('express');
+const favicon    = require('express-favicon');
 const bodyParser = require('body-parser');
+
+// var React = require('react');
+// var ReactDOM = require('react-dom');
+// var App = require('./components/App')
+
 
 const port = 3001;
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+// app.use(favicon(__dirname + '/public/favicon.png'));
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {

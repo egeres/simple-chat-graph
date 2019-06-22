@@ -2,10 +2,12 @@
   "name": "chat-graph",
   "version": "1.0.0",
   "description": "Small web application to display a graph with the message intensity of telegram chats.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "webpack -p && node server.js",
+    "dev": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -18,11 +20,20 @@
   },
   "homepage": "https://github.com/egeres/simple-chat-graph#readme",
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^3.0.0",
     "express": "^4.17.1",
+    "express-favicon": "^2.0.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "script-loader": "^0.7.2",
+    "style-loader": "^0.23.1",
+    "webpack-cli": "^3.3.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
     "babel-preset-react": "^6.24.1",
