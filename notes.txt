@@ -3,3 +3,4 @@
 "start": "node app.js",
 "start": "nodemon app.js",
 "start": "webpack -p && node server.js",
+"start": "webpack -p && nodemon server.js",

@@ -1,0 +1,30 @@
+/* body {
+  background-color: rgb(29, 29, 29);
+} */
+
+
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+  /* background-color: #ffffff; */
+  background-color: #0f0f0f;
+  margin: 0;
+  overflow-y: hidden;
+
+  font-family: "arial";
+  font-size: 20px;
+  color: #bfbfbf;
+}
+
+#graph_container {
+    width: 70%;
+    height:100vh;
+
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+
+    background-color: #171717;
+}

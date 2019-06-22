@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack -p && node server.js",
+    "start": "webpack -p && nodemon server.js",
     "dev": "webpack-dev-server --mode development --open",
     "build": "webpack --config webpack.config.js"
   },
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/egeres/simple-chat-graph#readme",
   "dependencies": {
     "babel-preset-env": "^1.7.0",
+    "d3": "^5.9.2",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
     "extract-text-webpack-plugin": "^3.0.2",

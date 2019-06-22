@@ -6,11 +6,81 @@
         <script src="js/react.development.js"></script> -->
         <!-- <script type="text/javascript" src="/bundle.js"></script> -->
         <title></title>
+        <link rel="stylesheet" href="style.css">
+
+        <style>
+            body, html {
+                height: 100%;
+                background-color: #000000;
+                margin: 0;
+                color:#fff;
+            }
+
+            .container_info {
+                /* overflow-y: scroll; */
+                overflow: hidden;
+                position: fixed;
+                float: left;
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                bottom: 10px;
+                width: 180px;
+                /* background-color: #eee; */
+                /* overflow-y: scroll; */
+                width: 20%;
+            }
+
+            .container_graphs {
+                scrollbar-color: grey #121212;
+                scrollbar-width: auto;
+                overflow-x: scroll;
+                float: right;
+                width: 80%;
+                max-width: 80%;
+                min-width: 80%;
+            }
+
+            .container_row {
+                display: block;
+                margin:5px;
+                background-color: #2f2f2f;
+            }
+
+            .container_timeline {
+                background-color: #222222;
+                height: 40px;
+                margin: 5px;
+            }
+
+            .container_row_graph {
+                display: block;
+                margin:5px;
+            }
+
+            .graph_title {
+                display: block;
+                margin-left: 10px;
+                align-items: center;
+                width: 190px;
+                height: 30px;
+                color:#d7d7d7;
+                font-size: 20px;
+                font-family: arial;
+            }
+
+            svg {
+                margin: 0;
+                display: block;
+            }
+        </style>
+
+
     </head>
     <body>
-        hewo
+        <!-- hewo -->
         <div id="root"></div>
     </body>
     <script src="dist/bundle.js"></script>
-    <link rel="stylesheet" href="styles_b.css">
+    <!-- <link rel="stylesheet" href="styles_b.css"> -->
 </html>
