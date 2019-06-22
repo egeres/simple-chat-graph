@@ -13,7 +13,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // app.use(favicon(__dirname + '/public/favicon.png'));
-app.use(express.static('public'))
+
+app.use("/dist", express.static('dist'))
+app.use("",      express.static('public'))
 
 app.get('/', (req, res) => {
   // res.send({ express: 'Hello From Express' });
