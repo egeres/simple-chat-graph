@@ -30,6 +30,14 @@ module.exports = {
         // },
 
 
+        // {
+        //     test: /\.json$/,
+        //     // loader: 'json-loader'
+        //     // use: ['json-loader']
+        //     use: ['raw-loader']
+        // },
+
+
       ]
     },
 
