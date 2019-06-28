@@ -48,7 +48,7 @@ app.get('/datos', (req, res) => {
         .map(   name => require("./" + path.join(dir_chats, name)));
 
 
-    console.log(resultado);
+    // console.log(resultado);
     res.send(resultado);
     // res.send(
     //     [
@@ -66,11 +66,13 @@ if (!Array.prototype.last){
 
 function process_text_file(input_name) {
 
+    console.log("Reconstructing chats !");
     // console.log(input_name);
 
     // fs.readFile(input_name, 'utf8', function(err, data) {
     fs.readFile(path.join(dir_process, input_name), 'utf8', function(err, data) {
         if (err) throw err;
+        console.log("Processing..." + input_name);
         // console.log('OK: ' + input_name);
         // console.log(data)
         // console.log(data.split("\n"))
@@ -112,13 +114,19 @@ function process_text_file(input_name) {
 
         }
 
+        info_displacement = 0;
+        info_displacement = moment().diff(moment(splitted_data[splitted_data.length -1].split(" ")[0], "DD/MM/YYYY"), "days");
+        console.log(info_displacement);
+        // info_displacement = 0;
+
         // console.log( moment("4/5/19", "DD/MM/YYYY").diff(moment("3/5/19", "DD/MM/YYYY"), 'days') );
 
 
         obj = {
-            nombre  : nombre_del_chat,
-            datos_1 : array_final,
-            tipo    : "whatsapp"
+            nombre            : nombre_del_chat,
+            datos_1           : array_final,
+            tipo              : "whatsapp",
+            displacement_days : info_displacement
         }
         var json = JSON.stringify(obj);
         // console.log( input_name.split(".") );
@@ -126,7 +134,7 @@ function process_text_file(input_name) {
         fs.writeFile(path.join(dir_chats, input_name.split(".")[0] + ".json"), json, 'utf8', function() {});
     });
 
-    return "he";
+    return true;
 }
 
 app.post('/update_chats', (req, res) => {

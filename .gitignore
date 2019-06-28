@@ -2,3 +2,7 @@
 node_modules/
 
 dist/
+
+chats/
+
+chats_to_process/
