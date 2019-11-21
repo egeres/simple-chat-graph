@@ -1,0 +1,56 @@
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+    background-color: #0f0f0f;
+    margin: 0;
+
+    /* overflow-y: hidden; */
+  
+    font-family: "arial";
+    font-size: 20px;
+    color: #bfbfbf;
+}
+
+.container_global {
+    width: 100%;
+    background-color: aqua;
+
+    display: flex;
+}
+
+#panel_names {
+    background-color: red;
+    /* display: inline-block; */
+
+}
+
+#panel_histories {
+    background-color: purple;
+    /* display: inline-block; */
+
+}
+
+.row_name {
+    background-color: darkblue;
+    overflow: hidden;
+}
+
+.row_name:hover {
+    background-color: cornflowerblue;
+}
+
+#draggablebar {
+    background-color: deeppink;
+    width: 10px;
+    height: 100%;
+}
+
+.spann {
+    height: 10px;
+    width: 10px;
+    background-color: cornsilk;
+    display: inline-block;
+    margin: 5px;
+}

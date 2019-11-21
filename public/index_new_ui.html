@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chats</title>
+    <link rel="stylesheet" href="style_b.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.5.11/split.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/draggable.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+</head>
+<body>
+    
+    <div class="container_global">
+
+        <div id="panel_names">
+            <div class="row_name"><div class="spann"></div>AAA</div>
+            <div class="row_name"><div class="spann"></div>BBB</div>
+            <div class="row_name"><div class="spann"></div>CCC</div>
+            <div class="row_name"><div class="spann"></div>DDD</div>
+        </div>
+
+        <div id="panel_histories">
+            <!-- <div id="draggablebar"></div> -->
+            <ol>
+                <li>zzzxczc</li>
+                <li>zzzxczc</li>
+                <li>zzzxczc</li>
+                <li>zzzxczc</li>
+                <li>zzzxczc</li></ol>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    Split(['#panel_names', '#panel_histories'], {
+        sizes: [18, 75],
+        minSize: [50, 800],
+        // gutterSize: 20,
+    });
+
+    var listWithHandle = document.getElementById("panel_names");
+
+    Sortable.create(listWithHandle, {
+        handle: '.spann',
+        animation: 150
+    });
+
+</script>
+</html>
