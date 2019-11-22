@@ -14,10 +14,11 @@ body {
 }
 
 .container_global {
-    width: 100%;
+    /* width: 100%; */
     background-color: aqua;
 
     display: flex;
+    margin: 100px;
 }
 
 #panel_names {
@@ -34,7 +35,23 @@ body {
 
 .row_name {
     background-color: darkblue;
+    /* overflow: hidden; */
+    /* overflow: scroll; */
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    white-space: nowrap ;
     overflow: hidden;
+
+    /* align-content: flex-end; */
+    /* justify-content: start; */
+    flex-wrap: nowrap;
+    /* flex */
+}
+
+.row_graph {
+    height: 60px;
+    background-color: black;
 }
 
 .row_name:hover {
@@ -48,9 +65,12 @@ body {
 }
 
 .spann {
-    height: 10px;
-    width: 10px;
+    height: 20px;
+    width: 20px;
+    min-width: 20px;
     background-color: cornsilk;
-    display: inline-block;
-    margin: 5px;
+    /* display: inline-block; */
+    margin: 20px;
+    /* background-image: ; */
+    /* background-image: url("a.jpg"); */
 }
