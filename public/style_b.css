@@ -47,11 +47,29 @@ body {
     /* justify-content: start; */
     flex-wrap: nowrap;
     /* flex */
+
+
+    -webkit-transition: background-color .1s linear;
+    -moz-transition:    background-color .1s linear;
+    -ms-transition:     background-color .1s linear;
+    -o-transition:      background-color .1s linear;
+    transition:         background-color .1s linear;
 }
 
+.gutter {
+    cursor: col-resize;
+}
 .row_graph {
     height: 60px;
     background-color: black;
+    white-space: nowrap ;
+    overflow: hidden;
+}
+
+.row_timeline {
+    height: 60px;
+    background-color: gray;
+
 }
 
 .row_name:hover {
@@ -65,6 +83,7 @@ body {
 }
 
 .spann {
+    /* cursor: all-scroll; */
     height: 20px;
     width: 20px;
     min-width: 20px;
