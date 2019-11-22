@@ -8,7 +8,7 @@ const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
 
-    entry: ['./src/index.jsx'],
+    entry: ['./src/index_new.jsx'],
 
     module: {
       rules: [
@@ -17,7 +17,11 @@ module.exports = {
 
         {
           test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
+          exclude: [
+            '/node_modules/',
+            // '/src/index_old.jsx',
+            // './'
+          ],
           use: ['babel-loader']
         },
 

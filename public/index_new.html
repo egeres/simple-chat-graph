@@ -23,7 +23,7 @@
             <input type="radio" id="radio3" name="radios" >|<label for="radio3">Lastest</label>
             <input type="radio" id="radio4" name="radios" >|<label for="radio4">Oldest</label>
         </div>
-        <a style="margin-left: 10px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f"></a>
+        <a style="margin-left: 5px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f"></a>
         
 
 
@@ -37,10 +37,20 @@
             <!-- <input type="radio" id="radio4" name="radios" >|<label for="radio4">Oldest</label> -->
         </div>
 
-        <a style="margin-right: 0px;" data-eva="arrow-left-outline"></a>
-        4
-        <a style="margin-left: 0px;" data-eva="arrow-right-outline"></a>
+        <a style="margin-right: 0px;" data-eva="arrow-left-outline" onclick="window.ui_property_days_width_decrease()"></a>
+        <a id="value_days_width">4</a>
+        <a style="margin-left: 0px;" data-eva="arrow-right-outline" onclick="window.ui_property_days_width_increase()"></a>
 
+
+
+        <span style="width: 50px;"></span>
+        Color:
+        <select style="margin-left: 5px;">
+            <option value="volvo">interpolateYlOrRd</option>
+            <option value="saab">interpolateGreys</option>
+            <option value="opel">interpolateInferno</option>
+        </select>
+        <a style="margin-left: 5px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f"></a>
 
 
         <span style="width: 50px;"></span>
@@ -48,6 +58,16 @@
         0
         <a style="margin-left: 10px;" data-eva="alert-triangle-outline" data-eva-fill="#f5f24f"></a>
         0
+
+
+        <!-- <a style="left_" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a> -->
+        <!-- <a style="left_" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a> -->
+        <!-- <a style="float:right;position: relative;" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a> -->
+        <!-- <a style="right:-10px;position: absolute;" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a> -->
+        <span style="width: 50px;"></span>
+        <a data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a>
+
+        <!-- flip-2-outline -->
 
     </div>
 
@@ -81,13 +101,35 @@
 
     </div>
 
+    <div style="height: 100px; width: 100px;"></div>
 
 </body>
 
 <script>
 
-    function assign_indexes() {
+    // function ui_property_days_width_increase() {
+    //     console.log("Incresaing...");
+        
+    //     if (days_width === 1 ) { days_width = 2 ; Cookies.set('days_width', days_width); }
+    //     if (days_width === 2 ) { days_width = 4 ; Cookies.set('days_width', days_width); }
+    //     if (days_width === 4 ) { days_width = 8 ; Cookies.set('days_width', days_width); }
+    //     if (days_width === 8 ) { days_width = 24; Cookies.set('days_width', days_width); }
+    //     if (days_width === 24) { days_width = 30; Cookies.set('days_width', days_width); }
+    // }
 
+    // function ui_property_days_width_decrease() {
+    //     console.log("Decresaing...");
+
+    //     if (days_width === 2 ) { days_width = 1 ; Cookies.set('days_width', days_width); }
+    //     if (days_width === 4 ) { days_width = 2 ; Cookies.set('days_width', days_width); }
+    //     if (days_width === 8 ) { days_width = 4 ; Cookies.set('days_width', days_width); }
+    //     if (days_width === 24) { days_width = 8 ; Cookies.set('days_width', days_width); }
+    //     if (days_width === 30) { days_width = 24; Cookies.set('days_width', days_width); }
+    // }
+
+    function assign_indexes() {
+        console.log("Assigning indexes");
+        
         var array = document.getElementById("panel_names").children;
         for (let index = 0; index < array.length; index++) {
             const element = array[index];
@@ -104,7 +146,7 @@
 
     }
 
-    assign_indexes()
+    // assign_indexes()
 
     function reorder_right_list() {
         console.log("ordering...");
@@ -159,17 +201,10 @@
 
     }
 
-    eva.replace({
-        fill : "#fff"
-    })
-
     Split(['#panel_names', '#panel_histories'], {
         sizes: [20, 80],
-        // minSize: [50, 20],
-        minSize: [100, 100],
+        minSize: [10, 100],
         gutterSize: 3,
-
-        
     });
 
     var listWithHandle = document.getElementById("panel_names");
@@ -222,7 +257,7 @@
     
     }
 
-    draw_test_graph();
+    // draw_test_graph();
 
     function draw_timeline(params) {
 
@@ -231,7 +266,7 @@
         ).append("svg");
         width  = 1500;
         height = 45;
-
+        
         svg.attr("width", width).attr("height", height);
         var g = svg.append("g").attr("transform", "translate(0, 0)");
         g.selectAll("foo").data([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]).enter().append("rect")
@@ -242,7 +277,11 @@
             .attr("fill", function(d, i) {  return '#fff'} );
 
     }
+
     draw_timeline()
+
+
+
 
 </script>
 <script src="dist/bundle.js"></script>

@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const fs         = require('fs');
 const path       = require('path');
 const moment     = require('moment');
+const chalk      = require('chalk');
+
 // var React = require('react');
 // var ReactDOM = require('react-dom');
 // var App = require('./components/App')
@@ -83,6 +85,7 @@ function process_text_file(input_name) {
         }
 
         // data.split("\n")
+        var total = 0;
 
         // console.log(moment("12-25-1995", "MM-DD-YYYY"));
         // console.log(moment("4/5/19", "DD/MM/YYYY"));
@@ -111,12 +114,12 @@ function process_text_file(input_name) {
             // console.log("processing...", splitted_data[i]);
             // console.log( moment(splitted_data[i].split(" ")[0], "DD/MM/YYYY").diff(d_inicio ,'days') )
             array_final[ moment(splitted_data[i].split(" ")[0], "DD/MM/YYYY").diff(d_inicio ,'days') ]++;
-
+            total++;
         }
 
         info_displacement = 0;
         info_displacement = moment().diff(moment(splitted_data[splitted_data.length -1].split(" ")[0], "DD/MM/YYYY"), "days");
-        console.log(info_displacement);
+        console.log("Days displacement is:", chalk.yellow(info_displacement), "total messages:", chalk.yellow(total));
         // info_displacement = 0;
 
         // console.log( moment("4/5/19", "DD/MM/YYYY").diff(moment("3/5/19", "DD/MM/YYYY"), 'days') );
@@ -126,12 +129,15 @@ function process_text_file(input_name) {
             nombre            : nombre_del_chat,
             datos_1           : array_final,
             tipo              : "whatsapp",
-            displacement_days : info_displacement
+            displacement_days : info_displacement,
+            total_mensajes    : total,
+            // maximo_mensajes   : max,
         }
         var json = JSON.stringify(obj);
         // console.log( input_name.split(".") );
         // fs.writeFile(path.join(dir_chats, input_name), json, 'utf8', function() {});
         fs.writeFile(path.join(dir_chats, input_name.split(".")[0] + ".json"), json, 'utf8', function() {});
+        console.log("");
     });
 
     return true;
@@ -151,6 +157,8 @@ app.post('/update_chats', (req, res) => {
     res.send('finished');
 });
 
+console.log("Updating chats...");
+// resultado = fs.readdirSync(dir_process).map(name => process_text_file(name));
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

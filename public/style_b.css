@@ -3,10 +3,8 @@ html {
 }
 body {
     min-height: 100%;
-    background-color: #0f0f0f;
+    background-color: #080808;
     margin: 0;
-
-    /* overflow-y: hidden; */
   
     font-family: "arial";
     font-size: 20px;
@@ -14,27 +12,78 @@ body {
 }
 
 .container_global {
-    /* width: 100%; */
-    background-color: aqua;
+    /* background-color: aqua; */
 
     display: flex;
-    margin: 100px;
+    justify-content: center;
+
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+
+
+.radio-toolbar {
+    color: #1d1d1d;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+
+}
+
+.radio-toolbar input[type="radio"] {
+    display: none;
+  }
+  
+.radio-toolbar label {
+    color: #727272;
+    display: inline-block;
+    /* background-color: rgb(24, 24, 24); */
+    /* padding: 4px 4px; */
+    font-family: Arial;
+    /* font-size: 16px; */
+    cursor: pointer;
+    font-weight: 100;
+    margin-left: 4px;
+}
+  
+  .radio-toolbar input[type="radio"]:checked+label {
+    /* background-color: rgb(37, 37, 37); */
+    /* font-weight: 600; */
+    text-decoration: underline;
+    color: beige;
+  }
+
+.bar_control {
+    background-color: #131313 ;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 100px;
+    display: flex;
+    padding :10px;
 }
 
 #panel_names {
-    background-color: red;
+    /* background-color: red; */
     /* display: inline-block; */
 
 }
 
 #panel_histories {
-    background-color: purple;
+    background-color: rgb(0, 0, 0);
     /* display: inline-block; */
-
+    overflow-x: scroll;
+    /* padding-left: 500px; */
+    overflow-y: hidden;
 }
 
 .row_name {
-    background-color: darkblue;
+    background-color: #1d1d1d;
     /* overflow: hidden; */
     /* overflow: scroll; */
     display: flex;
@@ -55,25 +104,37 @@ body {
     -o-transition:      background-color .1s linear;
     transition:         background-color .1s linear;
 }
+.row_name:hover {
+    background-color: #4b4b4b;
+}
 
 .gutter {
     cursor: col-resize;
+    background-color: #727272;
+
 }
 .row_graph {
-    height: 60px;
-    background-color: black;
+    height: 37px;
+    margin-left: 200px;
+    background-color: rgb(223, 223, 223);
     white-space: nowrap ;
-    overflow: hidden;
+    /* overflow: hidden; */
+    /* overflow-x: scroll; */
+    width: 3px;
 }
+
+
 
 .row_timeline {
-    height: 60px;
-    background-color: gray;
-
-}
-
-.row_name:hover {
-    background-color: cornflowerblue;
+    height: 37px;
+    margin-left: 200px;
+    margin-right: 200px;
+    /* ma */
+    /* background-color: gray; */
+    /* background:url(
+        data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVQYlWP4////fwZiwKhC+ioEALjAJ9mLw57DAAAAAElFTkSuQmCC
+   ) repeat;
+   background-size: 30px; */
 }
 
 #draggablebar {
@@ -84,12 +145,49 @@ body {
 
 .spann {
     /* cursor: all-scroll; */
-    height: 20px;
-    width: 20px;
-    min-width: 20px;
-    background-color: cornsilk;
+    height: 25px;
+    width: 25px;
+    min-width: 25px;
+    /* background-color: cornsilk; */
     /* display: inline-block; */
-    margin: 20px;
+    margin: 6px;
     /* background-image: ; */
     /* background-image: url("a.jpg"); */
+    color: #f58c4f;
 }
+
+.row_graph > svg {
+    margin-right: 200px;
+}
+
+.row_graph > svg:after {
+    content: ":";
+    color: white;
+}
+
+select {
+    /* background: transparent; */
+    background-color: black;
+    color:white;
+    border: none;
+    font-size: 20px;
+    font-weight: 100;
+    /* height: 29px; */
+    /* padding: 5px; If you add too much padding here, the options won't show in IE */
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    /* width: 268px; */
+    /* margin: 5px; */
+    /* padding: 5px; */
+}
+
+/* select:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+  } */
