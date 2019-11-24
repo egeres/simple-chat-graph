@@ -18,12 +18,12 @@
 
         Sort by:
         <div class="radio-toolbar">
-            <input type="radio" id="radio1" name="radios" checked><label for="radio1">Alphabetical</label>
-            <input type="radio" id="radio2" name="radios" >|<label for="radio2">Most</label>
-            <input type="radio" id="radio3" name="radios" >|<label for="radio3">Lastest</label>
-            <input type="radio" id="radio4" name="radios" >|<label for="radio4">Oldest</label>
+            <input onclick='window.ui_order_by_alphabetical()' type="radio" id="radio1" name="radios" checked><label for="radio1">Alphabetical</label>
+            <input onclick='window.ui_order_by_most()'         type="radio" id="radio2" name="radios" >|<label for="radio2">Most</label>
+            <input onclick='window.ui_order_by_lastest()'      type="radio" id="radio3" name="radios" >|<label for="radio3">Lastest</label>
+            <input onclick='window.ui_order_by_oldest()'       type="radio" id="radio4" name="radios" >|<label for="radio4">Oldest</label>
         </div>
-        <a style="margin-left: 5px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f"></a>
+        <a style="margin-left: 5px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f" data-eva-width="24"></a>
         
 
 
@@ -37,9 +37,9 @@
             <!-- <input type="radio" id="radio4" name="radios" >|<label for="radio4">Oldest</label> -->
         </div>
 
-        <a style="margin-right: 0px;" data-eva="arrow-left-outline" onclick="window.ui_property_days_width_decrease()"></a>
+        <a style="margin-right: 0px;" data-eva="arrow-left-outline" data-eva-width="24" onclick="window.ui_property_days_width_decrease()"></a>
         <a id="value_days_width">4</a>
-        <a style="margin-left: 0px;" data-eva="arrow-right-outline" onclick="window.ui_property_days_width_increase()"></a>
+        <a style="margin-left: 0px;" data-eva="arrow-right-outline" data-eva-width="24"onclick="window.ui_property_days_width_increase()"></a>
 
 
 
@@ -50,13 +50,13 @@
             <option value="saab">interpolateGreys</option>
             <option value="opel">interpolateInferno</option>
         </select>
-        <a style="margin-left: 5px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f"></a>
+        <a style="margin-left: 5px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f" data-eva-width="24"></a>
 
 
         <span style="width: 50px;"></span>
-        <a style="margin-left: 10px;" data-eva="alert-circle-outline"   data-eva-fill="#f5544f"></a>
+        <a style="margin-left: 10px;" data-eva="alert-circle-outline"   data-eva-fill="#f5544f" data-eva-width="24"></a>
         0
-        <a style="margin-left: 10px;" data-eva="alert-triangle-outline" data-eva-fill="#f5f24f"></a>
+        <a style="margin-left: 10px;" data-eva="alert-triangle-outline" data-eva-fill="#f5f24f" data-eva-width="24"></a>
         0
 
 
@@ -80,10 +80,10 @@
             <div class="row_name"><div class="spann"></div>CCC</div>
             <div class="row_name"><div class="spann"></div>DDD</div> -->
 
-            <div class="row_name"><i data-eva='more-vertical-outline' class="spann" data-eva-width="25"></i>AAA</div>
-            <div class="row_name"><i data-eva='more-vertical-outline' class="spann" data-eva-width="25"></i>BBB</div>
-            <div class="row_name"><i data-eva='more-vertical-outline' class="spann" data-eva-width="25"></i>CCC</div>
-            <div class="row_name"><i data-eva='more-vertical-outline' class="spann" data-eva-width="25"></i>DDD</div>
+            <div class="row_name"><i data-eva='more-vertical-outline' class="spann" data-eva-width="24"></i>AAA</div>
+            <div class="row_name"><i data-eva='more-vertical-outline' class="spann" data-eva-width="24"></i>BBB</div>
+            <div class="row_name"><i data-eva='more-vertical-outline' class="spann" data-eva-width="24"></i>CCC</div>
+            <div class="row_name"><i data-eva='more-vertical-outline' class="spann" data-eva-width="24"></i>DDD</div>
 
         </div>
 
@@ -127,24 +127,24 @@
     //     if (days_width === 30) { days_width = 24; Cookies.set('days_width', days_width); }
     // }
 
-    function assign_indexes() {
-        console.log("Assigning indexes");
+    // function assign_indexes() {
+    //     console.log("Assigning indexes");
         
-        var array = document.getElementById("panel_names").children;
-        for (let index = 0; index < array.length; index++) {
-            const element = array[index];
-            // console.log(element);
-            element.classList.add("index_" + index.toString());
-        }
+    //     var array = document.getElementById("panel_names").children;
+    //     for (let index = 0; index < array.length; index++) {
+    //         const element = array[index];
+    //         // console.log(element);
+    //         element.classList.add("index_" + index.toString());
+    //     }
 
-        var array = document.getElementById("panel_histories").children;
-        for (let index = 0; index < array.length; index++) {
-            const element = array[index];
-            // console.log(element);
-            element.classList.add("index_" + index.toString());
-        }
+    //     var array = document.getElementById("panel_histories").children;
+    //     for (let index = 0; index < array.length; index++) {
+    //         const element = array[index];
+    //         // console.log(element);
+    //         element.classList.add("index_" + index.toString());
+    //     }
 
-    }
+    // }
 
     // assign_indexes()
 

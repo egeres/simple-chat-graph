@@ -5,6 +5,9 @@ const fs         = require('fs');
 const path       = require('path');
 const moment     = require('moment');
 const chalk      = require('chalk');
+const util       = require('util');
+ 
+const readFile_p = util.promisify(fs.readFile); // Convert fs.readFile into Promise version of same    
 
 // var React = require('react');
 // var ReactDOM = require('react-dom');
@@ -58,6 +61,63 @@ app.get('/datos', (req, res) => {
     //         {nombre:"cosis",datos_1:[0, 0, 50, 60, 20, 30]}
     //     ]
     // );
+});
+
+
+var loaded = false;
+var list_unordered_values_total   = [];
+var list_unordered_values_first   = [];
+var list_unordered_values_lastest = [];
+
+app.get('/indices', (req, res) => {
+
+    console.log(list_unordered_values_total);
+    
+    if (loaded) {
+
+        // console.log(
+        //     list_unordered_values_total.map((v, i) => {return {"v":v, "i":i}})
+        // );
+        
+        // console.log(
+        //     list_unordered_values_total
+        //     .map((v, i) => {return {"v":v, "index":i}})
+        //     .sort((a,b) => b.v - a.v)
+        //     .map((v, i) => {return v.index})
+        // );
+        
+        var tmp_indices_alphabetical = [];
+        var tmp_indices_most         = [];
+        var tmp_indices_lastest      = [];
+        var tmp_indices_oldest       = [];
+
+        tmp_indices_alphabetical = 
+            list_unordered_values_total
+            .map((v, i) => {return i});
+
+        tmp_indices_most = 
+            list_unordered_values_total
+            .map((v, i) => {return {"v":v, "index":i}})
+            .sort((a,b) => b.v - a.v)
+            .map((v, i) => {return v.index});
+
+        resultado = {
+            indices_alphabetical:tmp_indices_alphabetical,
+            indices_most        :tmp_indices_most        ,
+            indices_lastest     :tmp_indices_lastest     ,
+            indices_oldest      :tmp_indices_oldest      ,
+        };
+    }
+    else {
+        resultado = {
+            indices_alphabetical:[0, 1, 6, 5],
+            indices_most        :[],
+            indices_lastest     :[],
+            indices_oldest      :[],
+        };
+    }
+    
+    res.send(resultado);
 });
 
 if (!Array.prototype.last){
@@ -133,6 +193,9 @@ function process_text_file(input_name) {
             total_mensajes    : total,
             // maximo_mensajes   : max,
         }
+
+        list_unordered_values_total.push(total)
+
         var json = JSON.stringify(obj);
         // console.log( input_name.split(".") );
         // fs.writeFile(path.join(dir_chats, input_name), json, 'utf8', function() {});
@@ -146,19 +209,49 @@ function process_text_file(input_name) {
 app.post('/update_chats', (req, res) => {
 
     // console.log("begin");
+    // list_unordered_values_total = [];
 
     resultado = fs.readdirSync(dir_process)
         // .filter(name => path.extname(name) === '.txt')
         // .map(   name => require("./" + path.join(dir_process, name)));
         .map(name => process_text_file(name));
 
-    // console.log(resultado);
+    // console.log(list_unordered_values_total);
 
     res.send('finished');
 });
 
+
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function load_indexes_jsonssss() {
+    console.log('Loading indexes of the json files...');
+
+    await Promise.all(
+        fs.readdirSync(dir_chats).map(async file_name => {
+            // console.log(chalk.blue(file_name));
+            outname = -1;
+            await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
+                obj     = JSON.parse(data);
+                outname = obj.total_mensajes;
+            });
+            return outname;
+        })
+    ).then(
+        values => {list_unordered_values_total = values;}
+    );
+
+    // console.log(list_unordered_values_total);
+    
+    loaded = true;
+}
+
 console.log("Updating chats...");
 // resultado = fs.readdirSync(dir_process).map(name => process_text_file(name));
+
+load_indexes_jsonssss();
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

@@ -8,9 +8,10 @@ import * as d3 from 'd3';
 import Cookies from 'js-cookie';
 
 console.log("loading the new index");
-let global_data = null;
-let graph_width = 1000;
-let days_width  = 4;
+let global_data    = null;
+let global_indices = null;
+let graph_width    = 1000;
+let days_width     = 4;
 let interpolate_color_function = d3.interpolateYlOrRd;
 
 if (Cookies.get('days_width')) { days_width = Cookies.get('days_width'); console.log('current days withd is', days_width); }
@@ -47,16 +48,93 @@ function ui_property_days_width_decrease() {
     ui_update_variables();
 }
 
+function ui_order_by_alphabetical() {
+
+    console.log("ordering alphabetical...");
+
+    var list_reference  = document.getElementById('panel_names');
+    
+    var newOrder = global_indices.indices_alphabetical;
+    console.log(newOrder);
+    
+    for(let i=0;i<newOrder.length;i++) {
+
+        // console.log(i);
+        
+        for (let j = 0; j < list_reference.children.length; j++) {
+            const element_j = list_reference.children[j];            
+            if(element_j.classList.contains("index_" + newOrder[i].toString())   ){ 
+                list_reference.appendChild(element_j);
+            }
+        }
+    }
+
+    reorder_right_list();
+}
+
+function ui_order_by_most() {
+
+    console.log("ordering alphabetical...");
+
+    var list_reference  = document.getElementById('panel_names');
+    
+    var newOrder = global_indices.indices_most;
+    console.log(newOrder);
+    
+    for(let i=0;i<newOrder.length;i++) {
+
+        // console.log(i);
+        
+        for (let j = 0; j < list_reference.children.length; j++) {
+            const element_j = list_reference.children[j];            
+            if(element_j.classList.contains("index_" + newOrder[i].toString())   ){ 
+                list_reference.appendChild(element_j);
+            }
+        }
+    }
+
+    reorder_right_list();   
+}
+
+function ui_order_by_lastest() {
+    reorder_right_list();
+}
+
+function ui_order_by_oldest() {
+    reorder_right_list();
+}
+
+function assign_indexes() {
+    console.log("Assigning indexes");
+    
+    var array = document.getElementById("panel_names").children;
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        // console.log(element);
+        element.classList.add("index_" + index.toString());
+    }
+
+    var array = document.getElementById("panel_histories").children;
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        // console.log(element);
+        element.classList.add("index_" + index.toString());
+    }
+}
+
 function update_chats() {
     fetch('/update_chats', {method:'post'})
 }
-
 
 // Hacky, needs to be removed !
 window.ui_property_days_width_increase = ui_property_days_width_increase;
 window.ui_property_days_width_decrease = ui_property_days_width_decrease;
 window.ui_update_variables             = ui_update_variables;
 window.update_chats                    = update_chats;
+window.ui_order_by_alphabetical        = ui_order_by_alphabetical;
+window.ui_order_by_most                = ui_order_by_most;
+window.ui_order_by_lastest             = ui_order_by_lastest;
+window.ui_order_by_oldest              = ui_order_by_oldest;
 
 class Row_name extends React.Component {
 
@@ -119,6 +197,14 @@ class Row_graph extends React.Component {
     }
 
 }
+
+fetch('/indices')
+    .then(function(response) { return response.json(); })
+    .then(function(data)     {
+        global_indices  = data;
+    }
+);
+
 
 fetch('/datos')
     // .then(function(response) { return response.text(); })
