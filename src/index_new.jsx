@@ -10,11 +10,13 @@ import Cookies from 'js-cookie';
 console.log("loading the new index");
 let global_data    = null;
 let global_indices = null;
-let graph_width    = 1000;
+let graph_width    = 2000;
 let days_width     = 4;
+let global_hidden  = false;
 let interpolate_color_function = d3.interpolateYlOrRd;
 
-if (Cookies.get('days_width')) { days_width = Cookies.get('days_width'); console.log('current days withd is', days_width); }
+if (Cookies.get('days_width'))    { days_width    = Cookies.get('days_width'); }
+if (Cookies.get('global_hidden')) { global_hidden = Cookies.get('global_hidden'); }
 
 // Cookies.get('contenedor_instancias_columns');
 // if (!Cookies.get('theme') || Cookies.get('theme') == "dark")
@@ -22,16 +24,38 @@ if (Cookies.get('days_width')) { days_width = Cookies.get('days_width'); console
 
 function ui_update_variables(params) {
     document.getElementById("value_days_width").innerHTML = Cookies.get('days_width').toString();
+    
+    if   (global_hidden === "true") { document.getElementById('btn-visible').setAttribute("data-eva", "eye-off-outline"); }
+    else                            { document.getElementById('btn-visible').setAttribute("data-eva", "eye-outline"); }
+
+    if (global_hidden === "true") { 
+        console.log('asdasdsa');
+        
+        var children = document.getElementById('panel_names').children;
+        for (var i = 0; i < children.length; i++) {
+            console.log(children[i]);
+            
+            children[i].classList.add("text_hidden");
+        }
+    }
+    else { 
+        
+    }
+
+//     element = document.getElementById("myDIV");
+//   element.classList.add("mystyle");
 }
 
 function ui_property_days_width_increase() {
     console.log("Incresaing...");
     
-    if      (days_width == 1 ) { days_width = 2 ; Cookies.set('days_width', days_width); }
-    else if (days_width == 2 ) { days_width = 4 ; Cookies.set('days_width', days_width); }
-    else if (days_width == 4 ) { days_width = 8 ; Cookies.set('days_width', days_width); }
-    else if (days_width == 8 ) { days_width = 24; Cookies.set('days_width', days_width); }
-    else if (days_width == 24) { days_width = 30; Cookies.set('days_width', days_width); }
+    if      (days_width == 1 ) { days_width = 2 ; }
+    else if (days_width == 2 ) { days_width = 4 ; }
+    else if (days_width == 4 ) { days_width = 8 ; }
+    else if (days_width == 8 ) { days_width = 24; }
+    else if (days_width == 24) { days_width = 37; }
+    else { days_width = 4; }
+    Cookies.set('days_width', days_width);
 
     ui_update_variables();
 }
@@ -39,13 +63,26 @@ function ui_property_days_width_increase() {
 function ui_property_days_width_decrease() {
     console.log("Decreasing...");
 
-    if      (days_width == 2 ) { days_width = 1 ; Cookies.set('days_width', days_width); }
-    else if (days_width == 4 ) { days_width = 2 ; Cookies.set('days_width', days_width); }
-    else if (days_width == 8 ) { days_width = 4 ; Cookies.set('days_width', days_width); }
-    else if (days_width == 24) { days_width = 8 ; Cookies.set('days_width', days_width); }
-    else if (days_width == 30) { days_width = 24; Cookies.set('days_width', days_width); }
-    
+    if      (days_width == 2 ) { days_width = 1 ; }
+    else if (days_width == 4 ) { days_width = 2 ; }
+    else if (days_width == 8 ) { days_width = 4 ; }
+    else if (days_width == 24) { days_width = 8 ; }
+    else if (days_width == 37) { days_width = 24; }
+    else { days_width = 4; }
+    Cookies.set('days_width', days_width);
+
     ui_update_variables();
+}
+
+function ui_property_toggle_hidden() {
+    // eye-off-outline
+    if   (global_hidden  === "true") { global_hidden = false; document.getElementById('btn-visible').setAttribute("data-eva", "eye-outline"); }
+    else                             { global_hidden = true;  document.getElementById('btn-visible').setAttribute("data-eva", "eye-off-outline"); }
+    
+    // data-eva="eye-outline"
+    // eye-off-outline
+    eva.replace({fill:"#fff"})
+    Cookies.set('global_hidden', global_hidden);
 }
 
 function ui_order_by_alphabetical() {
@@ -73,18 +110,10 @@ function ui_order_by_alphabetical() {
 }
 
 function ui_order_by_most() {
-
-    console.log("ordering alphabetical...");
-
+    console.log("ordering most...");
     var list_reference  = document.getElementById('panel_names');
-    
     var newOrder = global_indices.indices_most;
-    console.log(newOrder);
-    
     for(let i=0;i<newOrder.length;i++) {
-
-        // console.log(i);
-        
         for (let j = 0; j < list_reference.children.length; j++) {
             const element_j = list_reference.children[j];            
             if(element_j.classList.contains("index_" + newOrder[i].toString())   ){ 
@@ -92,16 +121,37 @@ function ui_order_by_most() {
             }
         }
     }
-
     reorder_right_list();   
 }
 
 function ui_order_by_lastest() {
-    reorder_right_list();
+    console.log("ordering lastest...");
+    var list_reference  = document.getElementById('panel_names');
+    var newOrder = global_indices.indices_lastest;
+    for(let i=0;i<newOrder.length;i++) {
+        for (let j = 0; j < list_reference.children.length; j++) {
+            const element_j = list_reference.children[j];            
+            if(element_j.classList.contains("index_" + newOrder[i].toString())   ){ 
+                list_reference.appendChild(element_j);
+            }
+        }
+    }
+    reorder_right_list();   
 }
 
 function ui_order_by_oldest() {
-    reorder_right_list();
+    console.log("ordering oldest...");
+    var list_reference  = document.getElementById('panel_names');
+    var newOrder = global_indices.indices_lastest;
+    for(let i=0;i<newOrder.length;i++) {
+        for (let j = 0; j < list_reference.children.length; j++) {
+            const element_j = list_reference.children[j];            
+            if(element_j.classList.contains("index_" + newOrder[i].toString())   ){ 
+                list_reference.appendChild(element_j);
+            }
+        }
+    }
+    reorder_right_list();   
 }
 
 function assign_indexes() {
@@ -126,9 +176,12 @@ function update_chats() {
     fetch('/update_chats', {method:'post'})
 }
 
+
 // Hacky, needs to be removed !
 window.ui_property_days_width_increase = ui_property_days_width_increase;
 window.ui_property_days_width_decrease = ui_property_days_width_decrease;
+window.ui_property_toggle_hidden       = ui_property_toggle_hidden;
+
 window.ui_update_variables             = ui_update_variables;
 window.update_chats                    = update_chats;
 window.ui_order_by_alphabetical        = ui_order_by_alphabetical;
@@ -154,13 +207,35 @@ class Row_name extends React.Component {
 class Row_graph extends React.Component {
 
     componentDidMount() {
-
-        console.log('mounting...');
-        console.log(this.props.my_index);
-        console.log(global_data[this.props.my_index].datos_1);
+        // console.log('mounting...');
+        // console.log(this.props.my_index);
+        // console.log(global_data[this.props.my_index].datos_1);
 
         var local_displacement_days = global_data[this.props.my_index].displacement_days;
-        
+
+        // Línea del principio
+        // d3.select(this.refs.waveGroup).append("line")
+        //     .style("stroke", "white").style("stroke-dasharray", ("3, 3"))
+        //     .attr("y1", 0).attr("y2", 37)
+        //     .attr("x1", graph_width)
+        //     .attr("x2", graph_width);
+
+        // Línea del final 
+        // d3.select(this.refs.waveGroup).append("line")
+        //     .style("stroke", "white").style("stroke-dasharray", ("3, 3"))
+        //     .attr("y1", 0).attr("y2", 37)
+        //     .attr("x1", 0)
+        //     .attr("x2", 0);
+
+        // Yearly lines 
+        [...Array(10).keys()].forEach(iii => {
+            d3.select(this.refs.waveGroup).append("line")
+            .style("stroke", "white").style("stroke-dasharray", ("3, 3"))
+            .attr("y1", 0).attr("y2", 37)
+            .attr("x1", graph_width - days_width * 365 * iii)
+            .attr("x2", graph_width - days_width * 365 * iii);
+        });
+
         d3.select(this.refs.waveGroup)
 
             // Cabecera típica para seleccionar el elemento del svg
@@ -188,7 +263,7 @@ class Row_graph extends React.Component {
     render() {
         return (
             <div class="row_graph">
-                <svg viewBox="0 0 1000 37" width="1000" height="37">
+                <svg viewBox="0 0 2000 37" width="2000" height="37">
                     <g id="waveShape" ref="waveGroup"></g>
                 </svg>
                 {/* <div style={{backgroundColor: "red", width:"10px", height:"10px"}}></div> */}
@@ -211,28 +286,30 @@ fetch('/datos')
     .then(function(response) { return response.json(); })
     .then(function(data)     {
 
+        var children;
+
         global_data  = data;
 
         // To generate the names
-        var children = [];
-        for (var i = 0; i < data.length; i++) {
-            children.push(<Row_name name={data[i].nombre} />);
-        }
+        children = []
+        for (var i = 0; i < data.length; i++) { children.push(<Row_name name={data[i].nombre} />); }
         ReactDOM.render( children, document.getElementById('panel_names') );
 
         // To generate the names
-        var children = [];
-        for (var i = 0; i < data.length; i++) {
-            children.push(<Row_graph my_index={i.toString()} />);
-        }
+        children = [];
+        for (var i = 0; i < data.length; i++) { children.push(<Row_graph my_index={i.toString()} />); }
         ReactDOM.render( children, document.getElementById('panel_histories') );
 
+        // Para cosas de la interfaz
         assign_indexes();
 
-        eva.replace({fill:"#fff"})
-                
+        // Scroll lateral infinito
         document.getElementById("panel_histories").scrollLeft = 100000;
 
+        // Update de cosas de ui de las cookies
         ui_update_variables();
+
+        // Eva icons de estos
+        eva.replace({fill:"#fff"})
 
 });

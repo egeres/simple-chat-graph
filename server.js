@@ -35,7 +35,7 @@ app.post('/', (req, res) => {
   res.send('hello world');
 });
 
-app.get('/datos', (req, res) => {
+app.get('/datos', async (req, res) => {
     // res.send('hello world 2');
 
     // console.log(
@@ -48,10 +48,24 @@ app.get('/datos', (req, res) => {
     //         .map(   name => require("./" + path.join(dir_chats, name)))
     // );
 
-    resultado = fs.readdirSync(dir_chats)
-        .filter(name => path.extname(name) === '.json')
-        .map(   name => require("./" + path.join(dir_chats, name)));
+    // resultado = fs.readdirSync(dir_chats)
+    //     .filter(name => path.extname(name) === '.json')
+    //     .map(   name => require("./" + path.join(dir_chats, name)));
 
+    resultado = [];
+    await Promise.all(
+        fs.readdirSync(dir_chats)
+        .filter(name => path.extname(name) === '.json')
+        .map(  async file_name => {
+            obj = null;
+            await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
+                try { obj = JSON.parse(data); } catch (e) {}
+            });
+            return obj;
+        })
+    ).then(
+        values => {resultado = values;}
+    );
 
     // console.log(resultado);
     res.send(resultado);
@@ -66,12 +80,12 @@ app.get('/datos', (req, res) => {
 
 var loaded = false;
 var list_unordered_values_total   = [];
-var list_unordered_values_first   = [];
 var list_unordered_values_lastest = [];
+var list_unordered_values_first   = [];
 
 app.get('/indices', (req, res) => {
 
-    console.log(list_unordered_values_total);
+    // console.log(list_unordered_values_total);
     
     if (loaded) {
 
@@ -100,6 +114,13 @@ app.get('/indices', (req, res) => {
             .map((v, i) => {return {"v":v, "index":i}})
             .sort((a,b) => b.v - a.v)
             .map((v, i) => {return v.index});
+
+        tmp_indices_lastest = 
+            list_unordered_values_lastest
+            .map((v, i) => {return {"v":v, "index":i}})
+            .sort((a,b) => b.v - a.v)
+            .map((v, i) => {return v.index})
+            .reverse();
 
         resultado = {
             indices_alphabetical:tmp_indices_alphabetical,
@@ -205,7 +226,7 @@ function process_text_file(input_name) {
 
     return true;
 }
-
+ 
 app.post('/update_chats', (req, res) => {
 
     // console.log("begin");
@@ -234,13 +255,39 @@ async function load_indexes_jsonssss() {
             // console.log(chalk.blue(file_name));
             outname = -1;
             await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
-                obj     = JSON.parse(data);
-                outname = obj.total_mensajes;
+                try {
+                    obj     = JSON.parse(data);
+                    outname = obj.total_mensajes;
+                }
+                catch (e) {
+                    outname = -1;
+                }
             });
             return outname;
         })
     ).then(
         values => {list_unordered_values_total = values;}
+    );
+
+
+
+    await Promise.all(
+        fs.readdirSync(dir_chats).map(async file_name => {
+            // console.log(chalk.blue(file_name));
+            outname = -1;
+            await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
+                try {
+                    obj     = JSON.parse(data);
+                    outname = obj.displacement_days;
+                }
+                catch (e) {
+                    outname = -1;
+                }
+            });
+            return outname;
+        })
+    ).then(
+        values => {list_unordered_values_lastest = values;}
     );
 
     // console.log(list_unordered_values_total);
