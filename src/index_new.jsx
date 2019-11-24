@@ -22,28 +22,30 @@ if (Cookies.get('global_hidden')) { global_hidden = Cookies.get('global_hidden')
 // if (!Cookies.get('theme') || Cookies.get('theme') == "dark")
 // Cookies.set('theme', 'clear');
 
-function ui_update_variables(params) {
+function ui_update_variables() {
+
     document.getElementById("value_days_width").innerHTML = Cookies.get('days_width').toString();
     
-    if   (global_hidden === "true") { document.getElementById('btn-visible').setAttribute("data-eva", "eye-off-outline"); }
-    else                            { document.getElementById('btn-visible').setAttribute("data-eva", "eye-outline"); }
+    if   (global_hidden === "true" || global_hidden === true) 
+    { document.getElementById('btn-visible').setAttribute("data-eva", "eye-off-outline"); }
+    else
+    { document.getElementById('btn-visible').setAttribute("data-eva", "eye-outline"); }
 
-    if (global_hidden === "true") { 
-        console.log('asdasdsa');
-        
+    if (global_hidden === "true" || global_hidden === true) { 
         var children = document.getElementById('panel_names').children;
         for (var i = 0; i < children.length; i++) {
-            console.log(children[i]);
-            
             children[i].classList.add("text_hidden");
         }
     }
     else { 
-        
+        var children = document.getElementById('panel_names').children;
+        for (var i = 0; i < children.length; i++) {
+            children[i].classList.remove("text_hidden");
+        }
     }
 
-//     element = document.getElementById("myDIV");
-//   element.classList.add("mystyle");
+    // Eva icons de estos
+    eva.replace({fill:"#fff"})
 }
 
 function ui_property_days_width_increase() {
@@ -76,13 +78,22 @@ function ui_property_days_width_decrease() {
 
 function ui_property_toggle_hidden() {
     // eye-off-outline
-    if   (global_hidden  === "true") { global_hidden = false; document.getElementById('btn-visible').setAttribute("data-eva", "eye-outline"); }
-    else                             { global_hidden = true;  document.getElementById('btn-visible').setAttribute("data-eva", "eye-off-outline"); }
+    // if   (global_hidden  === "true") { global_hidden = false; document.getElementById('btn-visible').setAttribute("data-eva", "eye-outline"); }
+    // else                             { global_hidden = true;  document.getElementById('btn-visible').setAttribute("data-eva", "eye-off-outline"); }
     
+    if (global_hidden  === "true" || global_hidden === true) 
+    { global_hidden = false; }
+    else
+    { global_hidden = true;  }
+
+    Cookies.set('global_hidden', global_hidden);
+    
+    ui_update_variables()
+
     // data-eva="eye-outline"
     // eye-off-outline
-    eva.replace({fill:"#fff"})
-    Cookies.set('global_hidden', global_hidden);
+    // eva.replace({fill:"#fff"})
+    // Cookies.set('global_hidden', global_hidden);
 }
 
 function ui_order_by_alphabetical() {
@@ -308,8 +319,4 @@ fetch('/datos')
 
         // Update de cosas de ui de las cookies
         ui_update_variables();
-
-        // Eva icons de estos
-        eva.replace({fill:"#fff"})
-
 });
