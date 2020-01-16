@@ -5,9 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack -p && nodemon server.js",
+    "start": "webpack -p && node server.js",
+    "start_nodemon": "webpack -p && nodemon server.js",
     "dev": "webpack-dev-server --mode development --open",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "hehe": "webpack -d --mode development && nodemon server.js",
+    "update:packages": "node wipe-dependencies.js && rm -rf node_modules && npm update --save-dev && npm update --save"
   },
   "repository": {
     "type": "git",
@@ -22,35 +25,36 @@
   "dependencies": {
     "babel-preset-env": "^1.7.0",
     "chalk": "^3.0.0",
-    "d3": "^5.9.2",
+    "d3": "^5.14.2",
+    "eva-icons": "^1.1.2",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "fs": "0.0.1-security",
-    "js-cookie": "^2.2.1",
+    "js-cookie": "^2.2.0",
     "json-loader": "^0.5.7",
     "moment": "^2.24.0",
-    "raw-loader": "^3.0.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "raw-loader": "^3.1.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "script-loader": "^0.7.2",
     "style-loader": "^0.23.1",
     "util": "^0.12.1",
-    "webpack-cli": "^3.3.4"
+    "webpack-cli": "^3.3.10"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
     "babel-preset-react": "^6.24.1",
-    "css-loader": "^3.0.0",
+    "css-loader": "^3.2.0",
     "html-webpack-plugin": "^3.2.0",
     "postcss-loader": "^3.0.0",
-    "sass": "^1.21.0",
-    "sass-loader": "^7.1.0",
-    "webpack": "^4.35.0",
-    "webpack-dev-server": "^3.7.2"
+    "sass": "^1.23.7",
+    "sass-loader": "^7.3.1",
+    "webpack": "^4.41.2",
+    "webpack-dev-server": "^3.9.0"
   }
 }

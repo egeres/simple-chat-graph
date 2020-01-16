@@ -6,3 +6,5 @@ dist/
 chats/
 
 chats_to_process/
+
+chats_discarded/
