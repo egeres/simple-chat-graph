@@ -5,28 +5,44 @@ import ReactDOM from 'react-dom';
 
 import * as d3 from 'd3';
 // import chat_0  from '../chats/chat_0.json';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
+// import * as Cookies from 'js-cookie';
+const Cookies = require('js-cookie');
+// var Cookies   = require('js-cookie');
+
+const eva     = require('eva-icons');
+
+
+// console.log(".................");
+// console.log(Cookies);
+// console.log(Cookies.get('days_width'));
+// console.log(typeof Cookies.get('days_width')    !== "undefined" );
+// console.log(".................");
 
 console.log("loading the new index");
 let global_data    = null;
 let global_indices = null;
 let graph_width    = 2000;
 let days_width     = 4;
-let global_hidden  = false;
+let global_hidden  = true;
 let interpolate_color_function = d3.interpolateYlOrRd;
 
-if (Cookies.get('days_width'))    { days_width    = Cookies.get('days_width'); }
-if (Cookies.get('global_hidden')) { global_hidden = Cookies.get('global_hidden'); }
+if (Cookies.get('days_width')    && (typeof Cookies.get('days_width')    !== "undefined")) { days_width    = Cookies.get('days_width'); }
+if (Cookies.get('global_hidden') && (typeof Cookies.get('global_hidden') !== "undefined")) { global_hidden = Cookies.get('global_hidden'); }
 
 // Cookies.get('contenedor_instancias_columns');
 // if (!Cookies.get('theme') || Cookies.get('theme') == "dark")
 // Cookies.set('theme', 'clear');
 
 function ui_update_variables() {
-
-    document.getElementById("value_days_width").innerHTML = Cookies.get('days_width').toString();
+    console.log('updating vars...');
     
-    if   (global_hidden === "true" || global_hidden === true) 
+    if (Cookies.get('days_width') && (typeof Cookies.get('days_width') !== "undefined"))
+    {
+        document.getElementById("value_days_width").innerHTML = Cookies.get('days_width').toString();
+    }
+    
+    if (global_hidden === "true" || global_hidden === true) 
     { document.getElementById('btn-visible').setAttribute("data-eva", "eye-off-outline"); }
     else
     { document.getElementById('btn-visible').setAttribute("data-eva", "eye-outline"); }
@@ -98,7 +114,7 @@ function ui_property_toggle_hidden() {
 
 function ui_order_by_alphabetical() {
 
-    console.log("ordering alphabetical...");
+    console.log("Ordering by alphabet...");
 
     var list_reference  = document.getElementById('panel_names');
     
@@ -121,7 +137,7 @@ function ui_order_by_alphabetical() {
 }
 
 function ui_order_by_most() {
-    console.log("ordering most...");
+    console.log("Ordering by most...");
     var list_reference  = document.getElementById('panel_names');
     var newOrder = global_indices.indices_most;
     for(let i=0;i<newOrder.length;i++) {
@@ -136,7 +152,7 @@ function ui_order_by_most() {
 }
 
 function ui_order_by_lastest() {
-    console.log("ordering lastest...");
+    console.log("Ordering by lastest...");
     var list_reference  = document.getElementById('panel_names');
     var newOrder = global_indices.indices_lastest;
     for(let i=0;i<newOrder.length;i++) {
@@ -151,9 +167,9 @@ function ui_order_by_lastest() {
 }
 
 function ui_order_by_oldest() {
-    console.log("ordering oldest...");
+    console.log("Ordering by oldest...");
     var list_reference  = document.getElementById('panel_names');
-    var newOrder = global_indices.indices_lastest;
+    var newOrder = global_indices.indices_oldest;
     for(let i=0;i<newOrder.length;i++) {
         for (let j = 0; j < list_reference.children.length; j++) {
             const element_j = list_reference.children[j];            
@@ -166,7 +182,7 @@ function ui_order_by_oldest() {
 }
 
 function assign_indexes() {
-    console.log("Assigning indexes");
+    console.log("Assigning indexes...");
     
     var array = document.getElementById("panel_names").children;
     for (let index = 0; index < array.length; index++) {
@@ -184,6 +200,8 @@ function assign_indexes() {
 }
 
 function update_chats() {
+    console.log("Updating chats...");
+
     fetch('/update_chats', {method:'post'})
 }
 
@@ -286,9 +304,7 @@ class Row_graph extends React.Component {
 
 fetch('/indices')
     .then(function(response) { return response.json(); })
-    .then(function(data)     {
-        global_indices  = data;
-    }
+    .then(function(data)     { global_indices = data;  }
 );
 
 
@@ -320,3 +336,15 @@ fetch('/datos')
         // Update de cosas de ui de las cookies
         ui_update_variables();
 });
+
+// window.addEventListener('load', function () {
+//     // alert("It's loaded!")
+//     ui_update_variables();
+
+//   })
+
+
+// setTcimeout(())
+// setTimeout(() => {
+//     ui_update_variables();
+// }, 1000);

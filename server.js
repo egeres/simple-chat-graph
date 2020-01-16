@@ -81,7 +81,7 @@ app.get('/datos', async (req, res) => {
 var loaded = false;
 var list_unordered_values_total   = [];
 var list_unordered_values_lastest = [];
-var list_unordered_values_first   = [];
+var list_unordered_values_oldest  = [];
 
 app.get('/indices', (req, res) => {
 
@@ -121,6 +121,18 @@ app.get('/indices', (req, res) => {
             .sort((a,b) => b.v - a.v)
             .map((v, i) => {return v.index})
             .reverse();
+
+        tmp_indices_oldest = 
+            list_unordered_values_oldest
+            .map((v, i) => {return {"v":v, "index":i}})
+            .sort((a,b) => a.v - b.v)
+            .map((v, i) => {return v.index})
+            .reverse();
+
+            
+        // console.log(list_unordered_values_total);
+        // console.log(list_unordered_values_oldest);
+        
 
         resultado = {
             indices_alphabetical:tmp_indices_alphabetical,
@@ -200,7 +212,11 @@ function process_text_file(input_name) {
 
         info_displacement = 0;
         info_displacement = moment().diff(moment(splitted_data[splitted_data.length -1].split(" ")[0], "DD/MM/YYYY"), "days");
-        console.log("Days displacement is:", chalk.yellow(info_displacement), "total messages:", chalk.yellow(total));
+        
+        info_displacement_begin = 0;
+        info_displacement_begin = moment().diff(moment(splitted_data[0].split(" ")[0], "DD/MM/YYYY"), "days");
+            
+        console.log("Displacement range is: [", chalk.yellow(info_displacement_begin), ",", chalk.yellow(info_displacement), "] total messages:", chalk.yellow(total));
         // info_displacement = 0;
 
         // console.log( moment("4/5/19", "DD/MM/YYYY").diff(moment("3/5/19", "DD/MM/YYYY"), 'days') );
@@ -212,6 +228,7 @@ function process_text_file(input_name) {
             tipo              : "whatsapp",
             displacement_days : info_displacement,
             total_mensajes    : total,
+            start_day         : info_displacement_begin,
             // maximo_mensajes   : max,
         }
 
@@ -290,8 +307,28 @@ async function load_indexes_jsonssss() {
         values => {list_unordered_values_lastest = values;}
     );
 
-    // console.log(list_unordered_values_total);
-    
+
+    await Promise.all(
+        fs.readdirSync(dir_chats).map(async file_name => {
+            // console.log(chalk.blue(file_name));
+            outname = -1;
+            await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
+                try {
+                    obj     = JSON.parse(data);
+                    outname = obj.start_day;
+                }
+                catch (e) {
+                    outname = -1;
+                }
+            });
+            return outname;
+        })
+    ).then(
+        values => {list_unordered_values_oldest = values;}
+    );
+
+
+    // console.log(list_unordered_values_total);    
     loaded = true;
 }
 
