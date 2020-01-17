@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <title>Chats</title>
     <link rel="stylesheet" href="style_b.css">
+    <!-- <script
+		src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script> -->
+              
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.5.11/split.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/draggable.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script> -->
     <!-- <script src="https://unpkg.com/eva-icons"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script> -->
 
@@ -20,38 +27,38 @@
     <div class="bar_control">
 
         Sort by:
-        <div class="radio-toolbar">
+        <div class="radio-toolbar" id="order_selection_menu">
             <input onclick='window.ui_property_set_ordering("alphabetical");' type="radio" id="radio1" name="radios" checked><label for="radio1">Alphabetical</label>
             <input onclick='window.ui_property_set_ordering("most");        ' type="radio" id="radio2" name="radios" >|<label for="radio2">Most</label>
             <input onclick='window.ui_property_set_ordering("lastest");     ' type="radio" id="radio3" name="radios" >|<label for="radio3">Lastest</label>
             <input onclick='window.ui_property_set_ordering("oldest");      ' type="radio" id="radio4" name="radios" >|<label for="radio4">Oldest</label>
         </div>
-        <a style="margin-left: 5px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f" data-eva-width="24"></a>
+        <a style="margin-left: 5px; flex-shrink: 0; cursor: pointer;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f" data-eva-width="24"></a>
 
         <span style="width: 50px;"></span>
         Mode:
         <div class="radio-toolbar">
             <input type="radio" id="radio10" name="radiosT" checked><label for="radio10">D</label>
             <input type="radio" id="radio20" name="radiosT" >|<label for="radio20">W</label>
-            <input type="radio" id="radio30" name="radiosT" >|<label for="radio30">M</label>|
+            <input type="radio" id="radio30" name="radiosT" >|<label for="radio30">M</label>
             <!-- <input type="radio" id="radio4" name="radios" >|<label for="radio4">Oldest</label> -->
         </div>
 
-        <a style="margin-right: 0px;" data-eva="arrow-left-outline" data-eva-width="24" onclick="window.ui_property_days_width_decrease()"></a>
+        <a style="margin-right: 0px; flex-shrink: 0; cursor: pointer;" data-eva="arrow-left-outline" data-eva-width="24" onclick="window.ui_property_days_width_decrease()"></a>
         <a id="value_days_width">4</a>
-        <a style="margin-left: 0px;" data-eva="arrow-right-outline" data-eva-width="24"onclick="window.ui_property_days_width_increase()"></a>
+        <a style="margin-left:  0px; flex-shrink: 0; cursor: pointer;" data-eva="arrow-right-outline" data-eva-width="24"onclick="window.ui_property_days_width_increase()"></a>
 
 
 
         <span style="width: 50px;"></span>
         Color:
-        <select style="margin-left: 5px;" onchange="window.ui_property_set_color(this.value)">
+        <select style="margin-left: 5px;" onchange="window.ui_property_set_color(this.value)" id="abcdeeeee">
             <option value="interpolateYlOrRd"> interpolateYlOrRd</option>
             <option value="interpolateGreys">  interpolateGreys</option>
             <option value="interpolateInferno">interpolateInferno</option>
         </select>
-        <a style="margin-left: 5px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f" data-eva-width="24"></a>
-
+        
+        <a style="margin-left: 5px; flex-shrink: 0; cursor: pointer;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f" data-eva-width="24"></a>
 
         <!-- <span style="width: 50px;"></span>
         <a style="margin-left: 10px;" data-eva="alert-circle-outline"   data-eva-fill="#f5544f" data-eva-width="24"></a>
@@ -60,14 +67,14 @@
         0 -->
 
         <span style="width: 50px;"></span>
-        <a id="btn-visible" data-eva="eye-outline" onclick="window.ui_property_toggle_hidden()"></a>
+        <a style="flex-shrink: 0; cursor: pointer;" id="btn-visible" data-eva="eye-outline" onclick="window.ui_property_toggle_hidden()"></a>
 
         <!-- <a style="left_" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a> -->
         <!-- <a style="left_" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a> -->
         <!-- <a style="float:right;position: relative;" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a> -->
         <!-- <a style="right:-10px;position: absolute;" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a> -->
         <span style="width: 50px;"></span>
-        <a data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()" alt="Refresh the data on the server"></a>
+        <a style="flex-shrink: 0; cursor: pointer;" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()" alt="Refresh the data on the server"></a>
 
         <!-- flip-2-outline -->
 
@@ -149,6 +156,10 @@
     // }
 
     // assign_indexes()
+    // $(document).ready(function() {
+    //     $('#abcdeeeee').select2();
+    // });
+
 
     function reorder_right_list() {
         // console.log("ordering...");
@@ -200,6 +211,15 @@
             }
         }
 
+
+        // Deseleccionamos el menú superior de los radio toolbars
+        // order_selection_menu
+        // console.log("deselecting...");
+        // var ele = document.getElementById("order_selection_menu");
+        // for(var i=0;i<ele.length;i++) {
+        //     ele[i].checked = false;
+        //     ele[i].removeClass('checked focus');
+        // }
 
     }
 
