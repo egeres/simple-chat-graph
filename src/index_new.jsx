@@ -1,15 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-
 import * as d3 from 'd3';
-// import chat_0  from '../chats/chat_0.json';
-// import Cookies from 'js-cookie';
-// import * as Cookies from 'js-cookie';
 const Cookies = require('js-cookie');
-// var Cookies   = require('js-cookie');
-
 const eva     = require('eva-icons');
 
 
@@ -25,20 +17,30 @@ let global_indices = null;
 let graph_width    = 2000;
 let days_width     = 4;
 let global_hidden  = true;
-let interpolate_color_function = d3.interpolateYlOrRd;
+// let interpolate_color_function = d3.interpolateYlOrRd;
+let interpolate_color_function = d3.interpolateGreys;
+// let interpolate_color_function = d3.interpolateInferno;
 
-if (Cookies.get('days_width')    && (typeof Cookies.get('days_width')    !== "undefined")) { days_width    = Cookies.get('days_width'); }
-if (Cookies.get('global_hidden') && (typeof Cookies.get('global_hidden') !== "undefined")) { global_hidden = Cookies.get('global_hidden'); }
+
+if (Cookies.get('days_width')         && (typeof Cookies.get('days_width')         !== "undefined")) { days_width    = Cookies.get('days_width'); }
+if (Cookies.get('global_hidden')      && (typeof Cookies.get('global_hidden')      !== "undefined")) { global_hidden = Cookies.get('global_hidden'); }
+if (Cookies.get('global_graph_color') && (typeof Cookies.get('global_graph_color') !== "undefined"))
+{
+    if (Cookies.get('global_graph_color') === "interpolateYlOrRd")  { interpolate_color_function = d3.interpolateYlOrRd; }
+    if (Cookies.get('global_graph_color') === "interpolateGreys")   { interpolate_color_function = d3.interpolateGreys; }
+    if (Cookies.get('global_graph_color') === "interpolateInferno") { interpolate_color_function = d3.interpolateInferno; }
+}
+
 
 // Cookies.get('contenedor_instancias_columns');
 // if (!Cookies.get('theme') || Cookies.get('theme') == "dark")
 // Cookies.set('theme', 'clear');
 
 function ui_update_variables() {
+    // This part of the code changes the visual aspect of the page depending on the lastest configuration saved in the cookies
     console.log('updating vars...');
     
-    if (Cookies.get('days_width') && (typeof Cookies.get('days_width') !== "undefined"))
-    {
+    if (Cookies.get('days_width') && (typeof Cookies.get('days_width') !== "undefined")) {
         document.getElementById("value_days_width").innerHTML = Cookies.get('days_width').toString();
     }
     
@@ -62,6 +64,20 @@ function ui_update_variables() {
 
     // Eva icons de estos
     eva.replace({fill:"#fff"})
+
+    if (Cookies.get('global_ordering') && (typeof Cookies.get('global_ordering') !== "undefined")) {
+        // document.getElementById("value_days_width").innerHTML = Cookies.get('days_width').toString();
+
+        // if (Cookies.get('global_ordering') === "") { }
+
+        if (Cookies.get('global_ordering') === "alphabetical") { ui_order_by_alphabetical(); }
+        if (Cookies.get('global_ordering') === "most")         { ui_order_by_most()        ; }
+        if (Cookies.get('global_ordering') === "lastest")      { ui_order_by_lastest()     ; }
+        if (Cookies.get('global_ordering') === "oldest")       { ui_order_by_oldest()      ; }
+
+    }
+
+    // global_ordering
 }
 
 function ui_property_days_width_increase() {
@@ -110,6 +126,31 @@ function ui_property_toggle_hidden() {
     // eye-off-outline
     // eva.replace({fill:"#fff"})
     // Cookies.set('global_hidden', global_hidden);
+}
+
+function ui_property_set_ordering(value) {
+
+
+    // window.ui_order_by_alphabetical()'
+    // window.ui_order_by_most()'        
+    // window.ui_order_by_lastest()'     
+    // window.ui_order_by_oldest()'      
+
+    // if (value ==="alphabetical") {}
+    // if (value ==="most")         {}
+    // if (value ==="lastest")      {}
+    // if (value ==="oldest")       {}
+
+    Cookies.set('global_ordering', value);
+    
+    ui_update_variables();
+}
+
+function ui_property_set_color(value) {
+    // console.log("Changing color scheme...", value);
+    Cookies.set('global_graph_color', value);
+    
+    ui_update_variables();
 }
 
 function ui_order_by_alphabetical() {
@@ -210,6 +251,8 @@ function update_chats() {
 window.ui_property_days_width_increase = ui_property_days_width_increase;
 window.ui_property_days_width_decrease = ui_property_days_width_decrease;
 window.ui_property_toggle_hidden       = ui_property_toggle_hidden;
+window.ui_property_set_ordering        = ui_property_set_ordering;
+window.ui_property_set_color           = ui_property_set_color;
 
 window.ui_update_variables             = ui_update_variables;
 window.update_chats                    = update_chats;

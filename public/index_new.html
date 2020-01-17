@@ -21,10 +21,10 @@
 
         Sort by:
         <div class="radio-toolbar">
-            <input onclick='window.ui_order_by_alphabetical()' type="radio" id="radio1" name="radios" checked><label for="radio1">Alphabetical</label>
-            <input onclick='window.ui_order_by_most()'         type="radio" id="radio2" name="radios" >|<label for="radio2">Most</label>
-            <input onclick='window.ui_order_by_lastest()'      type="radio" id="radio3" name="radios" >|<label for="radio3">Lastest</label>
-            <input onclick='window.ui_order_by_oldest()'       type="radio" id="radio4" name="radios" >|<label for="radio4">Oldest</label>
+            <input onclick='window.ui_property_set_ordering("alphabetical");' type="radio" id="radio1" name="radios" checked><label for="radio1">Alphabetical</label>
+            <input onclick='window.ui_property_set_ordering("most");        ' type="radio" id="radio2" name="radios" >|<label for="radio2">Most</label>
+            <input onclick='window.ui_property_set_ordering("lastest");     ' type="radio" id="radio3" name="radios" >|<label for="radio3">Lastest</label>
+            <input onclick='window.ui_property_set_ordering("oldest");      ' type="radio" id="radio4" name="radios" >|<label for="radio4">Oldest</label>
         </div>
         <a style="margin-left: 5px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f" data-eva-width="24"></a>
 
@@ -45,10 +45,10 @@
 
         <span style="width: 50px;"></span>
         Color:
-        <select style="margin-left: 5px;">
-            <option value="volvo">interpolateYlOrRd</option>
-            <option value="saab">interpolateGreys</option>
-            <option value="opel">interpolateInferno</option>
+        <select style="margin-left: 5px;" onchange="window.ui_property_set_color(this.value)">
+            <option value="interpolateYlOrRd"> interpolateYlOrRd</option>
+            <option value="interpolateGreys">  interpolateGreys</option>
+            <option value="interpolateInferno">interpolateInferno</option>
         </select>
         <a style="margin-left: 5px;" data-eva="arrow-downward-outline" data-eva-fill="#f58c4f" data-eva-width="24"></a>
 
@@ -67,7 +67,7 @@
         <!-- <a style="float:right;position: relative;" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a> -->
         <!-- <a style="right:-10px;position: absolute;" data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a> -->
         <span style="width: 50px;"></span>
-        <a data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()"></a>
+        <a data-eva="flip-2-outline" data-eva-fill="#f5f24f" onclick="window.update_chats()" alt="Refresh the data on the server"></a>
 
         <!-- flip-2-outline -->
 

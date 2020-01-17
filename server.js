@@ -8,6 +8,9 @@ const chalk      = require('chalk');
 const util       = require('util');
  
 const readFile_p = util.promisify(fs.readFile); // Convert fs.readFile into Promise version of same    
+// const readFileAsync = promisify(fs.readFile)
+const writeFile_p = util.promisify(fs.writeFile)
+const readdir_p = util.promisify(fs.readdir)
 
 // var React = require('react');
 // var ReactDOM = require('react-dom');
@@ -130,8 +133,9 @@ app.get('/indices', (req, res) => {
             .reverse();
 
             
-        // console.log(list_unordered_values_total);
-        // console.log(list_unordered_values_oldest);
+        // console.log("total   ", list_unordered_values_total);
+        // console.log("lastest ", list_unordered_values_lastest);
+        // console.log("oldest  ", list_unordered_values_oldest);
         
 
         resultado = {
@@ -159,14 +163,25 @@ if (!Array.prototype.last){
     };
 };
 
-function process_text_file(input_name) {
+async function process_text_file(input_name) {
 
-    console.log("Reconstructing chats !");
+    // console.log("process_text_file...");
+    list_unordered_values_total   = [];
+    // list_unordered_values_lastest = [];
+    // list_unordered_values_oldest  = [];
+
     // console.log(input_name);
 
     // fs.readFile(input_name, 'utf8', function(err, data) {
-    fs.readFile(path.join(dir_process, input_name), 'utf8', function(err, data) {
-        if (err) throw err;
+    // fs.readFile(path.join(dir_process, input_name), 'utf8', function(err, data) {
+    // await readFile_p(path.join(dir_process, input_name), 'utf8', async function(err, data) {
+    // fs.readFile(path.join(dir_process, input_name), 'utf8', async function(err, data) {
+
+    let data = await readFile_p(path.join(dir_process, input_name), 'utf8');
+
+    if (1) {
+
+        // if (err) throw err;
         console.log("Processing..." + input_name);
         // console.log('OK: ' + input_name);
         // console.log(data)
@@ -232,29 +247,74 @@ function process_text_file(input_name) {
             // maximo_mensajes   : max,
         }
 
-        list_unordered_values_total.push(total)
+        // list_unordered_values_total.push(total)
 
         var json = JSON.stringify(obj);
         // console.log( input_name.split(".") );
         // fs.writeFile(path.join(dir_chats, input_name), json, 'utf8', function() {});
-        fs.writeFile(path.join(dir_chats, input_name.split(".")[0] + ".json"), json, 'utf8', function() {});
-        console.log("");
-    });
+        // fs.writeFile(path.join(dir_chats, input_name), json, 'utf8', function() { console.log("file written");
+        //  });
+        // await fs.writeFile(path.join(dir_chats, input_name.split(".")[0] + ".json"), json, 'utf8', function() {});
+        // fs.writeFile(path.join(dir_chats, input_name.split(".")[0] + ".json"), json, 'utf8', () => {});
+        // await writeFile_p(path.join(dir_chats, input_name.split(".")[0] + ".json"), json, 'utf8', () => {console.log("Finished process_text_file"); return true;});
+        // await writeFile_p(path.join(dir_chats, input_name), json, 'utf8');
+        // await fs.writeFile(path.join(dir_chats, input_name), json, 'utf8');
+        // await fs.writeFile(path.join(dir_chats, input_name), json, 'utf8', () => {});
+        // console.log("Finished process_text_file");
+        // await writeFile_p(path.join(dir_chats, input_name.split(".")[0] + ".json"), json, 'utf8')
+        //     .then(() => {});
+        await writeFile_p(path.join(dir_chats, input_name.split(".")[0] + ".json"), json, 'utf8');
 
-    return true;
+        // console.log("gato");
+        return true;
+        // console.log("perro");
+
+    }
+    // })
+    // .then(() => {console.log("finishing... process_text_file...");return true;});
+
+    // console.log("finishing... process_text_file...");
+
+    // return true;
 }
  
-app.post('/update_chats', (req, res) => {
+app.post('/update_chats', async (req, res) => {
 
-    // console.log("begin");
+    // console.log(chalk.blue("0"));
     // list_unordered_values_total = [];
 
-    resultado = fs.readdirSync(dir_process)
-        // .filter(name => path.extname(name) === '.txt')
-        // .map(   name => require("./" + path.join(dir_process, name)));
-        .map(name => process_text_file(name));
+    // resultado = fs.readdirSync(dir_process)
+    //     // .filter(name => path.extname(name) === '.txt')
+    //     // .map(   name => require("./" + path.join(dir_process, name)));
+    //     // .map(name => process_text_file(name));
+    //     .map(name => {await process_text_file(name)});
+
+
+    let  content = "";
+    // // fs.readdir(dir_process, async (err, dir)=>{
+    // let out = await readdir_p(dir_process, async (err, dir)=>{
+    //     for(var i=0; i<dir.length; i++){
+    //         // let fileName = dir[i];
+    //         await process_text_file(dir[i]);
+    //         console.log(chalk.blue("0." + i));
+    //     }
+    //     return true;
+    // })
+
+    let dir = await readdir_p(dir_process);
+    for(var i=0; i<dir.length; i++){
+        // let fileName = dir[i];
+        await process_text_file(dir[i]);
+        // console.log(chalk.blue("0." + i));
+    }
+    // return true;
+
+    // console.log(chalk.blue("1"));
+
 
     // console.log(list_unordered_values_total);
+    await load_indexes_jsonssss();
+    // console.log(chalk.blue("2"));
 
     res.send('finished');
 });
@@ -267,68 +327,134 @@ function timeout(ms) {
 async function load_indexes_jsonssss() {
     console.log('Loading indexes of the json files...');
 
-    await Promise.all(
-        fs.readdirSync(dir_chats).map(async file_name => {
-            // console.log(chalk.blue(file_name));
-            outname = -1;
-            await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
-                try {
-                    obj     = JSON.parse(data);
-                    outname = obj.total_mensajes;
-                }
-                catch (e) {
-                    outname = -1;
-                }
-            });
-            return outname;
-        })
-    ).then(
-        values => {list_unordered_values_total = values;}
-    );
+    list_unordered_values_total   = [];
+    list_unordered_values_lastest = [];
+    list_unordered_values_oldest  = [];
+
+    // await Promise.all(
+    //     fs.readdirSync(dir_chats).map(async file_name => {
+    //         // console.log(chalk.blue(file_name));
+    //         outname = -1;
+    //         await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
+    //             try {
+    //                 obj     = JSON.parse(data);
+    //                 outname = obj.total_mensajes;
+    //             }
+    //             catch (e) {
+    //                 outname = -1;
+    //             }
+    //         });
+    //         return outname;
+    //     })
+    // ).then(
+    //     values => {list_unordered_values_total = values;}
+    // );
 
 
 
-    await Promise.all(
-        fs.readdirSync(dir_chats).map(async file_name => {
-            // console.log(chalk.blue(file_name));
-            outname = -1;
-            await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
-                try {
-                    obj     = JSON.parse(data);
-                    outname = obj.displacement_days;
-                }
-                catch (e) {
-                    outname = -1;
-                }
-            });
-            return outname;
-        })
-    ).then(
-        values => {list_unordered_values_lastest = values;}
-    );
+    // await Promise.all(
+    //     fs.readdirSync(dir_chats).map(async file_name => {
+    //         // console.log(chalk.blue(file_name));
+    //         outname = -1;
+    //         await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
+    //             try {
+    //                 obj     = JSON.parse(data);
+    //                 outname = obj.displacement_days;
+    //             }
+    //             catch (e) {
+    //                 outname = -1;
+    //             }
+    //         });
+    //         return outname;
+    //     })
+    // ).then(
+    //     values => {list_unordered_values_lastest = values;}
+    // );
 
 
-    await Promise.all(
-        fs.readdirSync(dir_chats).map(async file_name => {
-            // console.log(chalk.blue(file_name));
-            outname = -1;
-            await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
-                try {
-                    obj     = JSON.parse(data);
-                    outname = obj.start_day;
-                }
-                catch (e) {
-                    outname = -1;
-                }
-            });
-            return outname;
-        })
-    ).then(
-        values => {list_unordered_values_oldest = values;}
-    );
+
+    // await Promise.all(
+    //     fs.readdirSync(dir_chats).map(async file_name => {
+    //         // console.log(chalk.blue(file_name));
+    //         outname = -1;
+    //         await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
+    //             try {
+    //                 obj     = JSON.parse(data);
+    //                 outname = obj.start_day;
+    //             }
+    //             catch (e) {
+    //                 outname = -1;
+    //             }
+    //         });
+    //         return outname;
+    //     })
+    // ).then(
+    //     values => {list_unordered_values_oldest = values;}
+    // );
+
+    // await Promise.all(
+    //     fs.readdirSync(dir_chats).map(async file_name => {
+    //         console.log(chalk.blue(file_name));
+    //         outname = -1;
+    //         await readFile_p(path.join(dir_chats, file_name), 'utf8').then(data => {
+    //             try {
+    //                 obj     = JSON.parse(data);
+    //                 outname = obj;
+    //             }
+    //             catch (e) {
+    //                 outname = null;
+    //             }
+    //         });
+    //         return outname;
+    //     })
+    // )
+    // // .then(  values => {list_unordered_values_oldest = values;})
+    // // .filter(x      => x) // Filters out null values
+    // // .then(  values => values.filter(v => v))
+    // .then(  values => {
+    //     list_unordered_values_total   = values.total_mensajes;
+    //     list_unordered_values_lastest = values.displacement_days;
+    //     list_unordered_values_oldest  = values.start_day;
+    // });
 
 
+
+
+    let  content = "";
+    fs.readdir(dir_chats, (err, dir)=>{
+        for(var i=0; i<dir.length; i++){
+            let fileName = dir[i];
+            let filePath=dir_chats+"/"+fileName;
+            // console.log("A: "+fileName);
+            stat = fs.statSync(filePath);
+            if(stat.isFile()){
+                // console.log("B: "+fileName);
+                // // fs.readFileSync(filePath, 'utf8', function (err,data) {
+                // fs.readFile(filePath, 'utf8', function (err,data) {
+                // // readFile(path.join(dir_chats, file_name), 'utf8').then(data => {
+                //     if (err) {
+                //         console.log(err);
+                //     }
+                //     console.log("C: "+ fileName);
+                //     // mainWindow.webContents.send('getContent' , {msg:data});
+                // });
+
+                var cosa = fs.readFileSync(filePath, 'utf8');
+                // console.log(cosa);
+                var my_out = JSON.parse(cosa);
+
+                list_unordered_values_total.push(   my_out.total_mensajes    )
+                list_unordered_values_lastest.push( my_out.displacement_days )
+                list_unordered_values_oldest.push(  my_out.start_day         )
+                
+            }
+        }
+    })
+
+
+    // console.log("...");
     // console.log(list_unordered_values_total);    
+    // console.log("...");
     loaded = true;
 }
 
