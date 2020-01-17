@@ -244,6 +244,20 @@ function update_chats() {
     console.log("Updating chats...");
 
     fetch('/update_chats', {method:'post'})
+    .then(function(response) {
+        
+        console.log(response);
+        // Optional, playeamos una pequeña animación de display !
+        anime({
+            targets: "#ui_button_refresh",
+            translateY: [0, -10, 0],
+            easing:"easeOutQuint",
+            // delay: 100,
+        });
+
+        // ui_button_refresh
+    });
+
 }
 
 

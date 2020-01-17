@@ -12,6 +12,15 @@ const readFile_p = util.promisify(fs.readFile); // Convert fs.readFile into Prom
 const writeFile_p = util.promisify(fs.writeFile)
 const readdir_p = util.promisify(fs.readdir)
 
+
+function delay(t, val) {
+    return new Promise(function(resolve) {
+        setTimeout(function() {
+            resolve(val);
+        }, t);
+    });
+ }
+
 // var React = require('react');
 // var ReactDOM = require('react-dom');
 // var App = require('./components/App')
@@ -315,6 +324,8 @@ app.post('/update_chats', async (req, res) => {
     // console.log(list_unordered_values_total);
     await load_indexes_jsonssss();
     // console.log(chalk.blue("2"));
+
+    await delay(100);
 
     res.send('finished');
 });
