@@ -7,10 +7,9 @@ const moment     = require('moment');
 const chalk      = require('chalk');
 const util       = require('util');
  
-const readFile_p = util.promisify(fs.readFile); // Convert fs.readFile into Promise version of same    
-// const readFileAsync = promisify(fs.readFile)
+const readFile_p  = util.promisify(fs.readFile); // Convert fs.readFile into Promise version of same    
 const writeFile_p = util.promisify(fs.writeFile)
-const readdir_p = util.promisify(fs.readdir)
+const readdir_p   = util.promisify(fs.readdir)
 
 
 function delay(t, val) {
@@ -35,16 +34,18 @@ app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 // app.use(favicon(__dirname + '/public/favicon.png'));
 
-app.use("/dist", express.static('dist'))
-app.use("",      express.static('public'))
+app.use("/dist",   express.static('dist'))
+app.use("/public", express.static('public'))
 
 app.get('/', (req, res) => {
-    res.sendfile('public/index.html');
+    // console.log("|||:0");
+    // res.sendFile('public/index_new.html');
+    res.sendFile('index_new.html', { root: "public" });
 });
 
 app.post('/', (req, res) => {
-  // res.sendfile('public/index.html');
-  res.send('hello world');
+    // console.log("|||:1");
+    res.send('hello world');
 });
 
 app.get('/datos', async (req, res) => {
@@ -174,6 +175,9 @@ if (!Array.prototype.last){
 
 async function process_text_file(input_name) {
 
+    console.log("");
+    console.log("Processing files");
+        
     // console.log("process_text_file...");
     list_unordered_values_total   = [];
     // list_unordered_values_lastest = [];

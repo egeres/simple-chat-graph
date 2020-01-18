@@ -250,9 +250,15 @@ function update_chats() {
         // Optional, playeamos una pequeña animación de display !
         anime({
             targets: "#ui_button_refresh",
-            translateY: [0, -10, 0],
-            easing:"easeOutQuint",
+            // translateY: [0, -10, 0],
+            // rotate: '1turn',
+            // rotate: [180],
+            // easing:"easeOutQuint",
             // delay: 100,
+            rotate : [
+                { value: -180, duration: 1300, delay: 0 },
+                { value:  0,   duration: 0,    delay: 0 }
+            ]
         });
 
         // ui_button_refresh
